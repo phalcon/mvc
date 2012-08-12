@@ -88,5 +88,11 @@ class Application extends \Phalcon\Mvc\Application
 
 }
 
-$application = new Application();
-$application->main();
+
+try {
+	$application = new Application();
+	$application->main();
+}
+catch(Phalcon\Exception $e){
+	echo $e->getMessage();
+}

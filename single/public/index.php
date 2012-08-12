@@ -31,8 +31,7 @@ class Application extends \Phalcon\Mvc\Application
 
 		//Registering a dispatcher
 		$di->set('dispatcher', function(){
-			$dispatcher = new \Phalcon\Mvc\Dispatcher();			
-			return $dispatcher;
+			return new \Phalcon\Mvc\Dispatcher();
 		});		
 
 		//Registering a Http\Response 
@@ -85,5 +84,10 @@ class Application extends \Phalcon\Mvc\Application
 
 }
 
-$application = new Application();
-$application->main();
+try {
+	$application = new Application();
+	$application->main();
+}
+catch(Phalcon\Exception $e){
+	echo $e->getMessage();
+}
