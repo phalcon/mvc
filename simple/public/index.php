@@ -6,7 +6,9 @@
 
 $loader = new \Phalcon\Loader();		
 
-$loader->registerDirs(array('../apps/controllers/', '../apps/models/'))->register();
+$loader->registerDirs(array('../apps/controllers/', '../apps/models/'));
+
+$loader->register();
 
 $di = new \Phalcon\DI();
 
@@ -33,7 +35,7 @@ $di->set('db', function(){
 	return new \Phalcon\Db\Adapter\Pdo\Mysql(array(
 		"host" => "localhost",
 		"username" => "root",
-		"password" => "secret",
+		"password" => "hea101",
 		"dbname" => "invo"
 	));
 });
