@@ -49,7 +49,7 @@ $di->set('modelsManager', 'Phalcon\Mvc\Model\Manager');
 try {
 	$application = new \Phalcon\Mvc\Application();
 	$application->setDI($di);
-	$application->handle()->getContent();
+	echo $application->handle()->getContent();
 }
 catch(Phalcon\Exception $e){
 	echo $e->getMessage();
