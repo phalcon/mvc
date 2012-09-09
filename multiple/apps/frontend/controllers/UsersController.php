@@ -7,7 +7,7 @@ class UsersController extends \Phalcon\Mvc\Controller
 
 	public function indexAction()
 	{
-		echo __METHOD__;
+		echo '<br>', __METHOD__;
 	}
 
 }
