@@ -27,7 +27,13 @@ class Module
 		//Registering a dispatcher
 		$di->set('dispatcher', function () {
 			$dispatcher = new \Phalcon\Mvc\Dispatcher();
-			$dispatcher->setDefaultNamespace('Multiple\Frontend\Controllers\\');
+
+			//Attach a event listener to the dispatcher
+			$eventManager = new \Phalcon\Events\Manager();
+			$eventManager->attach('dispatch', new \Acl('frontend'));
+
+			$dispatcher->setEventsManager($eventManager);
+			$dispatcher->setDefaultNamespace("Multiple\Frontend\Controllers\\");
 			return $dispatcher;
 		});
 
