@@ -1,7 +1,7 @@
 <?php
 
 class Application extends \Phalcon\Mvc\Application
-{	
+{
 
 	/**
 	 * Register the services here to make them general or register in the ModuleDefinition to make them module-specific
@@ -9,7 +9,7 @@ class Application extends \Phalcon\Mvc\Application
 	protected function _registerServices()
 	{
 
-		$di = new \Phalcon\DI();		
+		$di = new \Phalcon\DI\FactoryDefault();
 
 		//Registering a router
 		$di->set('router', function(){
@@ -22,7 +22,7 @@ class Application extends \Phalcon\Mvc\Application
 				'module' => 'backend',
 				'controller' => 'login',
 				'action' => 'index',
-			));			
+			));
 
 			$router->add("/admin/products/:action", array(
 				'module' => 'backend',
@@ -39,26 +39,6 @@ class Application extends \Phalcon\Mvc\Application
 			return $router;
 
 		});
-
-		//Registering a Http\Response 
-		$di->set('response', function(){
-			return new \Phalcon\Http\Response();
-		});
-
-		//Registering a Http\Request
-		$di->set('request', function(){
-			return new \Phalcon\Http\Request();
-		});		
-
-		//Registering the Models-Metadata
-		$di->set('modelsMetadata', function(){
-			return new \Phalcon\Mvc\Model\Metadata\Memory();
-		});
-
-		//Registering the Models Manager
-		$di->set('modelsManager', function(){
-			return new \Phalcon\Mvc\Model\Manager();
-		});		
 
 		$this->setDI($di);
 	}

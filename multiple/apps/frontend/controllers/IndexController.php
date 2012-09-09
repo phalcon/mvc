@@ -2,10 +2,12 @@
 
 namespace Multiple\Frontend\Controllers;
 
-class IndexController extends \Phalcon\Mvc\Controller {
+class IndexController extends \Phalcon\Mvc\Controller
+{
 
-	public function indexAction(){
-		
+	public function indexAction()
+	{
+
 	}
-	
+
 }
