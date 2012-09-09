@@ -32,7 +32,7 @@ class Module
 
 			//Attach a event listener to the dispatcher
 			$eventManager = new \Phalcon\Events\Manager();
-			$eventManager->attach('dispatch', new Plugins\AclListener('frontend'));
+			$eventManager->attach('dispatch', new \Acl('backend'));
 
 			$dispatcher->setEventsManager($eventManager);
 			$dispatcher->setDefaultNamespace("Multiple\Backend\Controllers\\");
