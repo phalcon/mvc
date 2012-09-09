@@ -13,7 +13,7 @@ class Module
 		$loader->registerNamespaces(array(
 			'Multiple\Backend\Controllers' => '../apps/backend/controllers/',
 			'Multiple\Backend\Models' => '../apps/backend/models/',
-			'Multiple\Backend\Plugins' => '../apps/backend/plugins',
+			'Multiple\Backend\Plugins' => '../apps/backend/plugins/',
 		));
 
 		$loader->register();
