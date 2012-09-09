@@ -1,5 +1,7 @@
 <?php
 
+error_reporting(E_ALL);
+
 class Application extends \Phalcon\Mvc\Application
 {
 
@@ -11,12 +13,29 @@ class Application extends \Phalcon\Mvc\Application
 
 		$di = new \Phalcon\DI\FactoryDefault();
 
+		$loader = new \Phalcon\Loader();
+
+		/**
+		 * We're a registering a set of directories taken from the configuration file
+		 */
+		$loader->registerDirs(
+			array(
+				__DIR__ . '/../apps/library/'
+			)
+		)->register();
+
 		//Registering a router
 		$di->set('router', function(){
 
 			$router = new \Phalcon\Mvc\Router();
 
 			$router->setDefaultModule("frontend");
+
+			$router->add('/:controller/:action', array(
+				'module' => 'frontend',
+				'controller' => 1,
+				'action' => 2,
+			));
 
 			$router->add("/login", array(
 				'module' => 'backend',
