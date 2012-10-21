@@ -2,93 +2,64 @@
 
 error_reporting(E_ALL);
 
-class Application extends \Phalcon\Mvc\Application
-{
+$di = new \Phalcon\DI\FactoryDefault();
 
-	/**
-	 * Register the services here to make them general or register in the ModuleDefinition to make them module-specific
-	 */
-	protected function _registerServices()
-	{
+//Registering a router
+$di->set('router', function(){
 
-		$di = new \Phalcon\DI\FactoryDefault();
+	$router = new \Phalcon\Mvc\Router();
 
-		$loader = new \Phalcon\Loader();
+	$router->setDefaultModule("frontend");
 
-		/**
-		 * We're a registering a set of directories taken from the configuration file
-		 */
-		$loader->registerDirs(
-			array(
-				__DIR__ . '/../apps/library/'
-			)
-		)->register();
+	$router->add('/:controller/:action', array(
+		'module' => 'frontend',
+		'controller' => 1,
+		'action' => 2,
+	));
 
-		//Registering a router
-		$di->set('router', function(){
+	$router->add("/login", array(
+		'module' => 'backend',
+		'controller' => 'login',
+		'action' => 'index',
+	));
 
-			$router = new \Phalcon\Mvc\Router();
+	$router->add("/admin/products/:action", array(
+		'module' => 'backend',
+		'controller' => 'products',
+		'action' => 1,
+	));
 
-			$router->setDefaultModule("frontend");
+	$router->add("/products/:action", array(
+		'module' => 'frontend',
+		'controller' => 'products',
+		'action' => 1,
+	));
 
-			$router->add('/:controller/:action', array(
-				'module' => 'frontend',
-				'controller' => 1,
-				'action' => 2,
-			));
+	return $router;
+});
 
-			$router->add("/login", array(
-				'module' => 'backend',
-				'controller' => 'login',
-				'action' => 'index',
-			));
+//Registering a shared view component
+$di->set('view', function() {
+	$view = new \Phalcon\Mvc\View();
+	$view->setViewsDir('../apps/common/views/');
+	return $view;
+});
 
-			$router->add("/admin/products/:action", array(
-				'module' => 'backend',
-				'controller' => 'products',
-				'action' => 1,
-			));
+$application = new \Phalcon\Mvc\Application();
 
-			$router->add("/products/:action", array(
-				'module' => 'frontend',
-				'controller' => 'products',
-				'action' => 1,
-			));
+//Pass the DI to the application
+$application->setDI($di);
 
-			return $router;
-		});
+//Register the installed modules
+$application->registerModules(array(
+	'frontend' => array(
+		'className' => 'Multiple\Frontend\Module',
+		'path' => '../apps/modules/frontend/Module.php'
+	),
+	'backend' => array(
+		'className' => 'Multiple\Backend\Module',
+		'path' => '../apps/modules/backend/Module.php'
+	)
+));
 
-		//Registering a shared view component
-		$di->set('view', function() {
-			$view = new \Phalcon\Mvc\View();
-			$view->setViewsDir('../apps/common/views/');
-			return $view;
-		});
-
-		$this->setDI($di);
-	}
-
-	public function main()
-	{
-
-		$this->_registerServices();
-
-		//Register the installed modules
-		$this->registerModules(array(
-			'frontend' => array(
-				'className' => 'Multiple\Frontend\Module',
-				'path' => '../apps/modules/frontend/Module.php'
-			),
-			'backend' => array(
-				'className' => 'Multiple\Backend\Module',
-				'path' => '../apps/modules/backend/Module.php'
-			)
-		));
-
-		echo $this->handle()->getContent();
-	}
-
-}
-
-$application = new Application();
-$application->main();
+echo $application->handle()->getContent();
