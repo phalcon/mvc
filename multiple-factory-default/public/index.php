@@ -23,7 +23,7 @@ try {
 	 */
 	$di->set('url', function() {
 		$url = new \Phalcon\Mvc\Url();
-		$url->setBaseUri('/modules-factory-default/');
+		$url->setBaseUri('/multiple-factory-default/');
 		return $url;
 	});
 
