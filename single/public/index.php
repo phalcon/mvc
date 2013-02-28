@@ -4,9 +4,9 @@ class Application extends \Phalcon\Mvc\Application
 {
 
 	protected function _registerAutoloaders()
-	{		
+	{
 
-		$loader = new \Phalcon\Loader();		
+		$loader = new \Phalcon\Loader();
 
 		$loader->registerDirs(array(
 			'../apps/controllers/',
@@ -22,19 +22,19 @@ class Application extends \Phalcon\Mvc\Application
 	protected function _registerServices()
 	{
 
-		$di = new \Phalcon\DI();		
+		$di = new \Phalcon\DI();
 
 		//Registering a router
 		$di->set('router', function(){
 			return new \Phalcon\Mvc\Router();
-		});	
+		});
 
 		//Registering a dispatcher
 		$di->set('dispatcher', function(){
 			return new \Phalcon\Mvc\Dispatcher();
-		});		
+		});
 
-		//Registering a Http\Response 
+		//Registering a Http\Response
 		$di->set('response', function(){
 			return new \Phalcon\Http\Response();
 		});
@@ -50,12 +50,12 @@ class Application extends \Phalcon\Mvc\Application
 			$view->setViewsDir('../apps/views/');
 			return $view;
 		});
-		
+
 		$di->set('db', function(){
 			return new \Phalcon\Db\Adapter\Pdo\Mysql(array(
 				"host" => "localhost",
 				"username" => "root",
-				"password" => "hea101",
+				"password" => "",
 				"dbname" => "invo"
 			));
 		});
@@ -68,7 +68,7 @@ class Application extends \Phalcon\Mvc\Application
 		//Registering the Models Manager
 		$di->set('modelsManager', function(){
 			return new \Phalcon\Mvc\Model\Manager();
-		});		
+		});
 
 		$this->setDI($di);
 	}
@@ -77,7 +77,7 @@ class Application extends \Phalcon\Mvc\Application
 	{
 
 		$this->_registerServices();
-		$this->_registerAutoloaders();		
+		$this->_registerAutoloaders();
 
 		echo $this->handle()->getContent();
 	}

@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Frontend\Controllers;
+namespace Modules\Backend\Controllers;
 
 class ControllerBase extends \Phalcon\Mvc\Controller
 {
