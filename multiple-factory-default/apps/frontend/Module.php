@@ -28,7 +28,7 @@ class Module
 
 		$di['dispatcher'] = function() {
 			$dispatcher = new \Phalcon\Mvc\Dispatcher();
-			$dispatcher->setDefaultNamespace("Modules\Backend\Controllers");
+			$dispatcher->setDefaultNamespace("Modules\Frontend\Controllers");
 			return $dispatcher;
 		};
 
