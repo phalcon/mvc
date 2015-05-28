@@ -1,6 +1,8 @@
 <?php
 
-$app = new Phalcon\Mvc\Micro();
+use Phalcon\Mvc\Micro;
+
+$app = new Micro();
 
 $app->get('/', function () {
     echo "<h1>Welcome!</h1>";
@@ -16,7 +18,6 @@ $app->post('/store/something', function () use ($app) {
     $name = $app->request->getPost('name');
 
     echo "<h1>Hello! $name</h1>";
-    
 });
 
 $app->notFound(function () use ($app) {

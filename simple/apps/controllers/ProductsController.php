@@ -1,9 +1,12 @@
 <?php
 
-class ProductsController extends \Phalcon\Mvc\Controller {
-	
-	public function indexAction(){
-		$this->view->setVar('product', Products::findFirst());
-	}
+use Phalcon\Mvc\Controller;
 
+class ProductsController extends Controller
+{
+
+	public function indexAction()
+	{
+		$this->view->product = Products::findFirst();
+	}
 }

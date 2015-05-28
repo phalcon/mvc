@@ -2,6 +2,11 @@
 
 error_reporting(E_ALL);
 
+use Phalcon\Loader;
+use Phalcon\Mvc\Micro;
+use Phalcon\DI\FactoryDefault;
+use Phalcon\Db\Adapter\Pdo\Mysql as Database;
+
 try {
 
 	/**
@@ -9,7 +14,7 @@ try {
 	 */
 	$config = include __DIR__.'/../config/config.php';
 
-	$di = new \Phalcon\DI\FactoryDefault();
+	$di = new FactoryDefault();
 
 	/**
 	 * The URL component is used to generate all kind of urls in the application
@@ -24,7 +29,7 @@ try {
 	 * Database connection is created based in the parameters defined in the configuration file
 	 */
 	$di->set('db', function() use ($config) {
-		return new \Phalcon\Db\Adapter\Pdo\Mysql(array(
+		return new Database(array(
 			"host" => $config->database->host,
 			"username" => $config->database->username,
 			"password" => $config->database->password,
@@ -35,7 +40,7 @@ try {
 	/**
 	 * Registering an autoloader
 	 */
-	$loader = new \Phalcon\Loader();
+	$loader = new Loader();
 
 	$loader->registerDirs(
 		array(
@@ -46,13 +51,13 @@ try {
 	/**
 	 * Starting the application
 	 */
-	$app = new \Phalcon\Mvc\Micro();
+	$app = new Micro();
 
 	/**
 	 * Add your routes here
 	 */
 	$app->get('/', function () {
-		require __DIR__."/../views/index.phtml";
+		require __DIR__ . "/../views/index.phtml";
 	});
 
 	/**
@@ -60,7 +65,7 @@ try {
 	 */
 	$app->notFound(function () use ($app) {
 		$app->response->setStatusCode(404, "Not Found")->sendHeaders();
-		require __DIR__."/../views/404.phtml";
+		require __DIR__ . "/../views/404.phtml";
 	});
 
 	/**
@@ -68,8 +73,7 @@ try {
 	 */
 	$app->handle();
 
-} catch (Phalcon\Exception $e) {
-	echo $e->getMessage();
-} catch (PDOException $e){
-	echo $e->getMessage();
+} catch (\Exception $e) {
+	echo $e->getMessage(), PHP_EOL;
+	echo $e->getTraceAsString();
 }
