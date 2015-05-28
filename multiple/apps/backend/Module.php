@@ -2,18 +2,23 @@
 
 namespace Multiple\Backend;
 
+use Phalcon\Loader;
+use Phalcon\Mvc\View;
+use Phalcon\Mvc\Dispatcher;
+use Phalcon\Db\Adapter\Pdo\Mysql as Database;
+
 class Module
 {
 
 	public function registerAutoloaders()
 	{
 
-		$loader = new \Phalcon\Loader();
+		$loader = new Loader();
 
 		$loader->registerNamespaces(array(
 			'Multiple\Backend\Controllers' => '../apps/backend/controllers/',
-			'Multiple\Backend\Models' => '../apps/backend/models/',
-			'Multiple\Backend\Plugins' => '../apps/backend/plugins/',
+			'Multiple\Backend\Models'      => '../apps/backend/models/',
+			'Multiple\Backend\Plugins'     => '../apps/backend/plugins/',
 		));
 
 		$loader->register();
@@ -27,35 +32,26 @@ class Module
 
 		//Registering a dispatcher
 		$di->set('dispatcher', function() {
-
-			$dispatcher = new \Phalcon\Mvc\Dispatcher();
-
-			//Attach a event listener to the dispatcher
-			$eventManager = new \Phalcon\Events\Manager();
-			$eventManager->attach('dispatch', new \Acl('backend'));
-
-			$dispatcher->setEventsManager($eventManager);
+			$dispatcher = new Dispatcher();
 			$dispatcher->setDefaultNamespace("Multiple\Backend\Controllers\\");
 			return $dispatcher;
 		});
 
 		//Registering the view component
 		$di->set('view', function() {
-			$view = new \Phalcon\Mvc\View();
+			$view = new View();
 			$view->setViewsDir('../apps/backend/views/');
 			return $view;
 		});
 
 		//Set a different connection in each module
 		$di->set('db', function() {
-			return new \Phalcon\Db\Adapter\Pdo\Mysql(array(
+			return new Database(array(
 				"host" => "localhost",
 				"username" => "root",
 				"password" => "secret",
 				"dbname" => "invo"
 			));
 		});
-
 	}
-
 }

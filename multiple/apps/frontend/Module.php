@@ -2,13 +2,17 @@
 
 namespace Multiple\Frontend;
 
+use Phalcon\Loader;
+use Phalcon\Mvc\Dispatcher;
+use Phalcon\Db\Adapter\Pdo\Mysql;
+
 class Module
 {
 
 	public function registerAutoloaders()
 	{
 
-		$loader = new \Phalcon\Loader();
+		$loader = new Loader();
 
 		$loader->registerNamespaces(array(
 			'Multiple\Frontend\Controllers' => '../apps/frontend/controllers/',
@@ -26,7 +30,7 @@ class Module
 
 		//Registering a dispatcher
 		$di->set('dispatcher', function () {
-			$dispatcher = new \Phalcon\Mvc\Dispatcher();
+			$dispatcher = new Dispatcher();
 
 			//Attach a event listener to the dispatcher
 			$eventManager = new \Phalcon\Events\Manager();
@@ -45,14 +49,12 @@ class Module
 		});
 
 		$di->set('db', function () {
-			return new \Phalcon\Db\Adapter\Pdo\Mysql(array(
+			return new Database(array(
 				"host" => "localhost",
 				"username" => "root",
 				"password" => "secret",
 				"dbname" => "invo"
 			));
 		});
-
 	}
-
 }

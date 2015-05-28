@@ -1,11 +1,8 @@
 <?php
 
-class Products extends \Phalcon\Mvc\Model
-{
+use Phalcon\Mvc\Model;
 
-	public function getSource()
-	{
-		return 'products';
-	}
+class Products extends Model
+{
 
 }

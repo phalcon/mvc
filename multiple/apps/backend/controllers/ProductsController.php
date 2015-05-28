@@ -2,14 +2,14 @@
 
 namespace Multiple\Backend\Controllers;
 
+use Phalcon\Mvc\Controller;
 use Multiple\Backend\Models\Products as Products;
 
-class ProductsController extends \Phalcon\Mvc\Controller
+class ProductsController extends Controller
 {
 
 	public function indexAction()
 	{
-		$this->view->setVar('product', Products::findFirst());
+		$this->view->product = Products::findFirst();
 	}
-
 }

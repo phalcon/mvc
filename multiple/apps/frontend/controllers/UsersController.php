@@ -2,12 +2,13 @@
 
 namespace Multiple\Frontend\Controllers;
 
-class UsersController extends \Phalcon\Mvc\Controller
+use Phalcon\Mvc\Controller;
+
+class UsersController extends Controller
 {
 
 	public function indexAction()
 	{
 		echo '<br>', __METHOD__;
 	}
-
 }

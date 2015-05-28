@@ -2,18 +2,23 @@
 
 error_reporting(E_ALL);
 
-class Application extends \Phalcon\Mvc\Application
+use Phalcon\Loader;
+use Phalcon\Mvc\Router;
+use Phalcon\DI\FactoryDefault;
+use Phalcon\Mvc\Application as BaseApplication;
+
+class Application extends BaseApplication
 {
 
 	/**
 	 * Register the services here to make them general or register in the ModuleDefinition to make them module-specific
 	 */
-	protected function _registerServices()
+	protected function registerServices()
 	{
 
-		$di = new \Phalcon\DI\FactoryDefault();
+		$di = new FactoryDefault();
 
-		$loader = new \Phalcon\Loader();
+		$loader = new Loader();
 
 		/**
 		 * We're a registering a set of directories taken from the configuration file
@@ -27,7 +32,7 @@ class Application extends \Phalcon\Mvc\Application
 		//Registering a router
 		$di->set('router', function(){
 
-			$router = new \Phalcon\Mvc\Router();
+			$router = new Router();
 
 			$router->setDefaultModule("frontend");
 
@@ -65,7 +70,7 @@ class Application extends \Phalcon\Mvc\Application
 	public function main()
 	{
 
-		$this->_registerServices();
+		$this->registerServices();
 
 		//Register the installed modules
 		$this->registerModules(array(
