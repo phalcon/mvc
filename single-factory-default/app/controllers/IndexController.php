@@ -7,6 +7,4 @@ class IndexController extends ControllerBase
     {
 
     }
-
 }
-

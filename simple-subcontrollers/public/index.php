@@ -2,6 +2,8 @@
 
 error_reporting(E_ALL);
 
+use Phalcon\Mvc\Application;
+
 try {
 
 	/**
@@ -22,12 +24,10 @@ try {
 	/**
 	 * Handle the request
 	 */
-	$application = new \Phalcon\Mvc\Application($di);
+	$application = new Application($di);
 
 	echo $application->handle()->getContent();
 
-} catch (Phalcon\Exception $e) {
-	echo $e->getMessage();
-} catch (PDOException $e){
+} catch (\Exception $e) {
 	echo $e->getMessage();
 }

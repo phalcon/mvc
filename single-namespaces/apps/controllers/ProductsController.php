@@ -2,12 +2,14 @@
 
 namespace Single\Controllers;
 
+use Phalcon\Mvc\Controller;
 use Single\Models\Products as Products;
 
-class ProductsController extends \Phalcon\Mvc\Controller {
-	
-	public function indexAction(){
-		$this->view->setVar('product', Products::findFirst());
-	}
+class ProductsController extends Controller
+{
 
+	public function indexAction()
+	{
+		$this->view->product = Products::findFirst();
+	}
 }

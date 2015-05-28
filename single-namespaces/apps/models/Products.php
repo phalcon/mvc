@@ -2,10 +2,13 @@
 
 namespace Single\Models;
 
-class Products extends \Phalcon\Mvc\Model {
+use Phalcon\Mvc\Model;
 
-	public function initialize(){
+class Products extends Model
+{
+
+	public function initialize()
+	{
 		$this->setSource('products');
 	}
-	
 }

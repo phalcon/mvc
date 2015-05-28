@@ -1,16 +1,23 @@
 <?php
 
+use Phalcon\Di;
+use Phalcon\Loader;
+use Phalcon\Db\Adapter\Pdo\Mysql;
+
 /**
  * Very simple MVC structure
  */
 
-$loader = new \Phalcon\Loader();
+$loader = new Loader();
 
-$loader->registerDirs(array('../apps/controllers/', '../apps/models/'));
+$loader->registerDirs(array(
+	'../apps/controllers/',
+	'../apps/models/'
+));
 
 $loader->register();
 
-$di = new \Phalcon\DI();
+$di = new Di();
 
 //Registering a router
 $di->set('router', 'Phalcon\Mvc\Router');
@@ -29,7 +36,7 @@ $di->set('view', function(){
 });
 
 $di->set('db', function(){
-	return new \Phalcon\Db\Adapter\Pdo\Mysql(array(
+	return new Database(array(
 		"host" => "localhost",
 		"username" => "root",
 		"password" => "",
@@ -75,7 +82,6 @@ try {
 
 	echo $response->getContent();
 
-}
-catch(Phalcon\Exception $e){
+} catch(\Exception $e){
 	echo $e->getMessage();
 }

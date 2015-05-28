@@ -2,14 +2,21 @@
 
 error_reporting(E_ALL);
 
+use Phalcon\DI\FactoryDefault;
+use Phalcon\Mvc\View as View;
+use Phalcon\Mvc\Url as UrlResolver;
+use Phalcon\Mvc\Application as Application;
+use Phalcon\Session\Adapter\Files as Session;
+use Phalcon\Db\Adapter\Pdo\Mysql as Database;
+
 try {
 
 	/**
 	 * Read the configuration
 	 */
-	$config = include(__DIR__."/../app/config/config.php");
+	$config = include __DIR__ . "/../app/config/config.php";
 
-	$loader = new \Phalcon\Loader();
+	$loader = new Loader();
 
 	/**
 	 * We're a registering a set of directories taken from the configuration file
@@ -24,13 +31,13 @@ try {
 	/**
 	 * The FactoryDefault Dependency Injector automatically register the right services providing a full stack framework
 	 */
-	$di = new \Phalcon\DI\FactoryDefault();
+	$di = new FactoryDefault();
 
 	/**
 	 * The URL component is used to generate all kind of urls in the application
 	 */
 	$di->set('url', function() use ($config) {
-		$url = new \Phalcon\Mvc\Url();
+		$url = new UrlResolver();
 		$url->setBaseUri($config->application->baseUri);
 		return $url;
 	});
@@ -39,7 +46,7 @@ try {
 	 * Setting up the view component
 	 */
 	$di->set('view', function() use ($config) {
-		$view = new \Phalcon\Mvc\View();
+		$view = new View();
 		$view->setViewsDir($config->application->viewsDir);
 		return $view;
 	});
@@ -48,31 +55,26 @@ try {
 	 * Database connection is created based in the parameters defined in the configuration file
 	 */
 	$di->set('db', function() use ($config) {
-		return new \Phalcon\Db\Adapter\Pdo\Mysql(array(
-			"host" => $config->database->host,
+		return new Database(array(
+			"host"     => $config->database->host,
 			"username" => $config->database->username,
 			"password" => $config->database->password,
-			"dbname" => $config->database->name
+			"dbname"   => $config->database->name
 		));
 	});
 
 	/**
 	 * If the configuration specify the use of metadata adapter use it or use memory otherwise
 	 */
-	$di->set('modelsMetadata', function() use ($config) {
-		if (isset($config->models->metadata)) {
-			$metadataAdapter = 'Phalcon\Mvc\Model\Metadata\\'.$config->models->metadata->adapter;
-			return new $metadataAdapter();
-		} else {
-			return new \Phalcon\Mvc\Model\Metadata\Memory();
-		}
+	$di->set('modelsMetadata', function() {
+		return new MemoryMetaData();
 	});
 
 	/**
 	 * Start the session the first time some component request the session service
 	 */
 	$di->set('session', function() {
-		$session = new \Phalcon\Session\Adapter\Files();
+		$session = new Session();
 		$session->start();
 		return $session;
 	});
@@ -80,12 +82,9 @@ try {
 	/**
 	 * Handle the request
 	 */
-	$application = new \Phalcon\Mvc\Application();
-	$application->setDI($di);
+	$application = new Application($di);
 	echo $application->handle()->getContent();
 
-} catch (Phalcon\Exception $e) {
-	echo $e->getMessage();
-} catch (PDOException $e){
+} catch (\Exception $e) {
 	echo $e->getMessage();
 }

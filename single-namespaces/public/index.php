@@ -2,17 +2,29 @@
 
 namespace Single;
 
-class Application extends \Phalcon\Mvc\Application
+use Phalcon\DI;
+use Phalcon\Loader;
+use Phalcon\Mvc\View;
+use Phalcon\Mvc\Router;
+use Phalcon\Mvc\Dispatcher;
+use Phalcon\Http\Response;
+use Phalcon\Http\Request;
+use Phalcon\Db\Adapter\Pdo\Mysql as Database;
+use Phalcon\Mvc\Model\Manager as ModelsManager;
+use Phalcon\Mvc\Application as BaseApplication;
+use Phalcon\Mvc\Model\Metadata\Memory as MemoryMetaData;
+
+class Application extends BaseApplication
 {
 
-	protected function _registerAutoloaders()
-	{		
+	protected function registerAutoloaders()
+	{
 
-		$loader = new \Phalcon\Loader();		
+		$loader = new Loader();
 
 		$loader->registerNamespaces(array(
 			'Single\Controllers' => '../apps/controllers/',
-			'Single\Models' => '../apps/models/'
+			'Single\Models'      => '../apps/models/'
 		));
 
 		$loader->register();
@@ -21,42 +33,42 @@ class Application extends \Phalcon\Mvc\Application
 	/**
 	 * This methods registers the services to be used by the application
 	 */
-	protected function _registerServices()
+	protected function registerServices()
 	{
 
-		$di = new \Phalcon\DI();		
+		$di = new DI();
 
 		//Registering a router
 		$di->set('router', function(){
-			return new \Phalcon\Mvc\Router();
-		});	
+			return new Router();
+		});
 
 		//Registering a dispatcher
 		$di->set('dispatcher', function(){
-			$dispatcher = new \Phalcon\Mvc\Dispatcher();
+			$dispatcher = new Dispatcher();
 			$dispatcher->setDefaultNamespace('Single\Controllers\\');
 			return $dispatcher;
-		});		
+		});
 
-		//Registering a Http\Response 
+		//Registering a Http\Response
 		$di->set('response', function(){
-			return new \Phalcon\Http\Response();
+			return new Response();
 		});
 
 		//Registering a Http\Request
 		$di->set('request', function(){
-			return new \Phalcon\Http\Request();
+			return new Request();
 		});
 
 		//Registering the view component
 		$di->set('view', function(){
-			$view = new \Phalcon\Mvc\View();
+			$view = new View();
 			$view->setViewsDir('../apps/views/');
 			return $view;
 		});
-		
+
 		$di->set('db', function(){
-			return new \Phalcon\Db\Adapter\Pdo\Mysql(array(
+			return new Database(array(
 				"host" => "localhost",
 				"username" => "root",
 				"password" => "",
@@ -66,13 +78,13 @@ class Application extends \Phalcon\Mvc\Application
 
 		//Registering the Models-Metadata
 		$di->set('modelsMetadata', function(){
-			return new \Phalcon\Mvc\Model\Metadata\Memory();
+			return new MemoryMetaData();
 		});
 
 		//Registering the Models Manager
 		$di->set('modelsManager', function(){
-			return new \Phalcon\Mvc\Model\Manager();
-		});		
+			return new ModelsManager();
+		});
 
 		$this->setDI($di);
 	}
@@ -81,18 +93,18 @@ class Application extends \Phalcon\Mvc\Application
 	{
 
 		$this->_registerServices();
-		$this->_registerAutoloaders();		
+		$this->_registerAutoloaders();
 
 		echo $this->handle()->getContent();
 	}
-
 }
 
 
 try {
+
 	$application = new Application();
 	$application->main();
-}
-catch(Phalcon\Exception $e){
+
+} catch (\Exception $e) {
 	echo $e->getMessage();
 }

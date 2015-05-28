@@ -2,10 +2,13 @@
 
 namespace Single\Controllers;
 
-class IndexController extends \Phalcon\Mvc\Controller {
+use Phalcon\Mvc\Controller;
 
-	public function indexAction(){
-		
+class IndexController extends Controller
+{
+
+	public function indexAction()
+	{
+
 	}
-	
 }

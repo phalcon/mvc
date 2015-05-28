@@ -12,6 +12,4 @@ class IndexController extends ControllerBase
     {
     	$this->view->hello = "hey, hello!";
     }
-
 }
-
