@@ -2,13 +2,19 @@
 
 namespace Modules\Frontend;
 
+use Phalcon\Loader;
+use Phalcon\Mvc\View;
+use Phalcon\DiInterface;
+use Phalcon\Mvc\Dispatcher;
+use Phalcon\Db\Adapter\Pdo\Mysql as MySQLAdapter;
+
 class Module
 {
 
 	public function registerAutoloaders()
 	{
 
-		$loader = new \Phalcon\Loader();
+		$loader = new Loader();
 
 		$loader->registerNamespaces(array(
 			'Modules\Frontend\Controllers' => __DIR__ . '/controllers/',
@@ -18,16 +24,16 @@ class Module
 		$loader->register();
 	}
 
-	public function registerServices($di)
+	public function registerServices(DiInterface $di)
 	{
 
 		/**
 		 * Read configuration
 		 */
-		$config = include __DIR__ . "/config/config.php";
+		$config = require __DIR__ . "/config/config.php";
 
 		$di['dispatcher'] = function() {
-			$dispatcher = new \Phalcon\Mvc\Dispatcher();
+			$dispatcher = new Dispatcher();
 			$dispatcher->setDefaultNamespace("Modules\Frontend\Controllers");
 			return $dispatcher;
 		};
@@ -36,7 +42,7 @@ class Module
 		 * Setting up the view component
 		 */
 		$di['view'] = function() {
-			$view = new \Phalcon\Mvc\View();
+			$view = new View();
 
 			$view->setViewsDir(__DIR__ . '/views/');
 			$view->setLayoutsDir('../../common/layouts/');
@@ -49,14 +55,12 @@ class Module
 		 * Database connection is created based in the parameters defined in the configuration file
 		 */
 		$di['db'] = function() use ($config) {
-			return new \Phalcon\Db\Adapter\Pdo\Mysql(array(
+			return new MySQLAdapter(array(
 				"host" => $config->database->host,
 				"username" => $config->database->username,
 				"password" => $config->database->password,
 				"dbname" => $config->database->name
 			));
 		};
-
 	}
-
 }

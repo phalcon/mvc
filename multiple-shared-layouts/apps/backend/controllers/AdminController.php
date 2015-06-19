@@ -9,6 +9,4 @@ class AdminController extends ControllerBase
     {
 
     }
-
 }
-

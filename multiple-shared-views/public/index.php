@@ -1,13 +1,18 @@
 <?php
 
+use Phalcon\Mvc\Router;
+use Phalcon\Mvc\View;
+use Phalcon\Mvc\Application;
+use Phalcon\DI\FactoryDefault;
+
 error_reporting(E_ALL);
 
-$di = new \Phalcon\DI\FactoryDefault();
+$di = new FactoryDefault();
 
 //Registering a router
 $di->set('router', function(){
 
-	$router = new \Phalcon\Mvc\Router();
+	$router = new Router();
 
 	$router->setDefaultModule("frontend");
 
@@ -40,15 +45,12 @@ $di->set('router', function(){
 
 //Registering a shared view component
 $di->set('view', function() {
-	$view = new \Phalcon\Mvc\View();
+	$view = new View();
 	$view->setViewsDir('../apps/common/views/');
 	return $view;
 });
 
-$application = new \Phalcon\Mvc\Application();
-
-//Pass the DI to the application
-$application->setDI($di);
+$application = new Application($di);
 
 //Register the installed modules
 $application->registerModules(array(
