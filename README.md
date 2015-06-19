@@ -110,6 +110,29 @@ single-factory-default/
     └── index.php
 ```
 
+## Single-Camelized-Dirs
+This a single-module MVC structure. All files and directories are camelized (including views):
+
+```
+single-camelized-dirs/
+├── App
+│   ├── Config
+│   │   ├── Loader.php
+│   │   └── Services.php
+│   ├── Controllers
+│   │   ├── IndexController.php
+│   │   └── ProductsController.php
+│   ├── Models
+│   │   └── Products.php
+│   └── Views
+│       ├── Index
+│       │   └── Index.phtml
+│       └── Products
+│           └── Index.phtml
+└── public
+    └── index.php
+```
+
 # Multiple
 This a multi-module MVC structure. This example implements two modules: frontend and backend.
 By default frontend is served if no route to backend is asked. You can define which routes
