@@ -377,3 +377,19 @@ micro-factory-default/
     ├── 404.phtml
     └── index.phtml
 ```
+
+# Micro-Simple-Views
+A micro-framework-like application where views are rendered using
+Phalcon\Mvc\View\Simple:
+
+```
+micro-simple-views
+├── config
+│   ├── config.php
+│   └── services.php
+├── index.php
+└── views
+    ├── 404.volt
+    ├── 500.volt
+    └── index.volt
+```
