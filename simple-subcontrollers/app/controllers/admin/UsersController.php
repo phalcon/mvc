@@ -9,6 +9,4 @@ class UsersController extends ControllerBase
     {
     	echo '[' . __METHOD__ . ']';
     }
-
 }
-

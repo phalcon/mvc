@@ -10,5 +10,4 @@ class SayController extends Controller
 	{
 		return new Response('hello there');
 	}
-
 }

@@ -11,5 +11,4 @@ class ControllerBase extends Controller
 	{
 		$this->view->setViewsDir($this->view->getViewsDir() . 'admin/');
 	}
-
 }

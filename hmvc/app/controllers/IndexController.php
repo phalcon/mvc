@@ -12,5 +12,4 @@ class IndexController extends Controller
 			'action' => 'hello'
 		)));
 	}
-
 }

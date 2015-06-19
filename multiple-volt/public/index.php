@@ -28,8 +28,6 @@ try {
 
 	echo $application->handle()->getContent();
 
-} catch (Phalcon\Exception $e) {
-	echo $e->getMessage();
-} catch (PDOException $e){
+} catch (\Exception $e) {
 	echo $e->getMessage();
 }

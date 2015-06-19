@@ -2,10 +2,11 @@
 
 namespace Multiple\Frontend;
 
-use Phalcon\Loader,
-	Phalcon\Mvc\View,
-	Phalcon\Db\Adapter\Pdo\Mysql as DbAdapter,
-	Phalcon\Mvc\ModuleDefinitionInterface;
+use Phalcon\Loader;
+use Phalcon\Mvc\View;
+use Phalcon\DiInterface;
+use Phalcon\Db\Adapter\Pdo\Mysql as DbAdapter;
+use Phalcon\Mvc\ModuleDefinitionInterface;
 
 class Module implements ModuleDefinitionInterface
 {
@@ -31,7 +32,7 @@ class Module implements ModuleDefinitionInterface
 	 *
 	 * @param Phalcon\DI $di
 	 */
-	public function registerServices($di)
+	public function registerServices(DiInterface $di)
 	{
 
 		/**
@@ -66,7 +67,5 @@ class Module implements ModuleDefinitionInterface
 				"dbname" => $config->database->name
 			));
 		};
-
 	}
-
 }

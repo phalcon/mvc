@@ -81,9 +81,7 @@ class HMVCApplication extends MVCApplication
 
 		return $response;
 	}
-
 }
-
 
 $app = new HMVCApplication(new FactoryDefault());
 
