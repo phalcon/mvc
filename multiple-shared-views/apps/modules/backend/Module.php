@@ -40,7 +40,5 @@ class Module
 				"dbname" => "invo"
 			));
 		});
-
 	}
-
 }

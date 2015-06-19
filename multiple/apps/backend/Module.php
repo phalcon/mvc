@@ -5,6 +5,7 @@ namespace Multiple\Backend;
 use Phalcon\Loader;
 use Phalcon\Mvc\View;
 use Phalcon\Mvc\Dispatcher;
+use Phalcon\DiInterface;
 use Phalcon\Db\Adapter\Pdo\Mysql as Database;
 
 class Module
@@ -27,7 +28,7 @@ class Module
 	/**
 	 * Register the services here to make them general or register in the ModuleDefinition to make them module-specific
 	 */
-	public function registerServices($di)
+	public function registerServices(DiInterface $di)
 	{
 
 		//Registering a dispatcher

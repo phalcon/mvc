@@ -2,12 +2,13 @@
 
 namespace Multiple\Backend\Controllers;
 
-class IndexController extends \Phalcon\Mvc\Controller
+use Phalcon\Mvc\Controller;
+
+class IndexController extends Controller
 {
 
 	public function indexAction()
 	{
-		return $this->_forward('/login');
+		return $this->dispatcher->forward('login');
 	}
-
 }
