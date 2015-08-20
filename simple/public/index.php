@@ -2,7 +2,7 @@
 
 use Phalcon\Loader;
 use Phalcon\Mvc\View;
-use Phalcon\Db\Adapter\Pdo\Mysql;
+use Phalcon\Db\Adapter\Pdo\Mysql as Database;
 
 /**
  * Very simple MVC structure
