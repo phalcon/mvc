@@ -92,8 +92,8 @@ class Application extends BaseApplication
 	public function main()
 	{
 
-		$this->_registerServices();
-		$this->_registerAutoloaders();
+		$this->registerServices();
+		$this->registerAutoloaders();
 
 		echo $this->handle()->getContent();
 	}
