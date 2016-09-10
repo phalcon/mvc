@@ -4,16 +4,16 @@ namespace Multiple\Frontend;
 
 class Module
 {
-
     public function registerAutoloaders()
     {
-
         $loader = new \Phalcon\Loader();
 
-        $loader->registerNamespaces(array(
-            'Multiple\Frontend\Controllers' => '../apps/modules/frontend/controllers/',
-            'Multiple\Frontend\Models' => '../apps/modules/frontend/models/',
-        ));
+        $loader->registerNamespaces(
+            [
+                "Multiple\\Frontend\\Controllers" => "../apps/modules/frontend/controllers/",
+                "Multiple\\Frontend\\Models"      => "../apps/modules/frontend/models/",
+            ]
+        );
 
         $loader->register();
     }
@@ -23,21 +23,30 @@ class Module
      */
     public function registerServices($di)
     {
+        // Registering a dispatcher
+        $di->set(
+            "dispatcher",
+            function () {
+                $dispatcher = new \Phalcon\Mvc\Dispatcher();
 
-        //Registering a dispatcher
-        $di->set('dispatcher', function () {
-            $dispatcher = new \Phalcon\Mvc\Dispatcher();
-            $dispatcher->setDefaultNamespace("Multiple\Frontend\Controllers\\");
-            return $dispatcher;
-        });
+                $dispatcher->setDefaultNamespace("Multiple\Frontend\Controllers\\");
 
-        $di->set('db', function () {
-            return new \Phalcon\Db\Adapter\Pdo\Mysql(array(
-                "host" => "localhost",
-                "username" => "root",
-                "password" => "secret",
-                "dbname" => "invo"
-            ));
-        });
+                return $dispatcher;
+            }
+        );
+
+        $di->set(
+            "db",
+            function () {
+                return new \Phalcon\Db\Adapter\Pdo\Mysql(
+                    [
+                        "host"     => "localhost",
+                        "username" => "root",
+                        "password" => "secret",
+                        "dbname"   => "invo",
+                    ]
+                );
+            }
+        );
     }
 }
