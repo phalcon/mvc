@@ -1,15 +1,15 @@
 <?php
 
 use Phalcon\Mvc\Application;
+use Exception;
 
 error_reporting(E_ALL);
 
 try {
-
     /**
      * Include services
      */
-    require __DIR__ . '/../config/services.php';
+    require __DIR__ . "/../config/services.php";
 
     /**
      * Handle the request
@@ -24,9 +24,11 @@ try {
     /**
      * Include modules
      */
-    require __DIR__ . '/../config/modules.php';
+    require __DIR__ . "/../config/modules.php";
 
-    echo $application->handle()->getContent();
-} catch (\Exception $e) {
+    $response = $application->handle();
+
+    echo $response->getContent();
+} catch (Exception $e) {
     echo $e->getMessage();
 }
