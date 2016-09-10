@@ -3,6 +3,7 @@
 error_reporting(E_ALL);
 
 use Phalcon\DI\FactoryDefault;
+use Phalcon\Loader;
 use Phalcon\Mvc\View as View;
 use Phalcon\Mvc\Url as UrlResolver;
 use Phalcon\Mvc\Application as Application;
