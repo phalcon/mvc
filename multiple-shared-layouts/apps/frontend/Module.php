@@ -11,56 +11,56 @@ use Phalcon\Db\Adapter\Pdo\Mysql as MySQLAdapter;
 class Module
 {
 
-	public function registerAutoloaders()
-	{
+    public function registerAutoloaders()
+    {
 
-		$loader = new Loader();
+        $loader = new Loader();
 
-		$loader->registerNamespaces(array(
-			'Modules\Frontend\Controllers' => __DIR__ . '/controllers/',
-			'Modules\Frontend\Models' => __DIR__ . '/models/',
-		));
+        $loader->registerNamespaces(array(
+            'Modules\Frontend\Controllers' => __DIR__ . '/controllers/',
+            'Modules\Frontend\Models' => __DIR__ . '/models/',
+        ));
 
-		$loader->register();
-	}
+        $loader->register();
+    }
 
-	public function registerServices(DiInterface $di)
-	{
+    public function registerServices(DiInterface $di)
+    {
 
-		/**
-		 * Read configuration
-		 */
-		$config = require __DIR__ . "/config/config.php";
+        /**
+         * Read configuration
+         */
+        $config = require __DIR__ . "/config/config.php";
 
-		$di['dispatcher'] = function() {
-			$dispatcher = new Dispatcher();
-			$dispatcher->setDefaultNamespace("Modules\Frontend\Controllers");
-			return $dispatcher;
-		};
+        $di['dispatcher'] = function () {
+            $dispatcher = new Dispatcher();
+            $dispatcher->setDefaultNamespace("Modules\Frontend\Controllers");
+            return $dispatcher;
+        };
 
-		/**
-		 * Setting up the view component
-		 */
-		$di['view'] = function() {
-			$view = new View();
+        /**
+         * Setting up the view component
+         */
+        $di['view'] = function () {
+            $view = new View();
 
-			$view->setViewsDir(__DIR__ . '/views/');
-			$view->setLayoutsDir('../../common/layouts/');
-			$view->setTemplateAfter('main');
+            $view->setViewsDir(__DIR__ . '/views/');
+            $view->setLayoutsDir('../../common/layouts/');
+            $view->setTemplateAfter('main');
 
-			return $view;
-		};
+            return $view;
+        };
 
-		/**
-		 * Database connection is created based in the parameters defined in the configuration file
-		 */
-		$di['db'] = function() use ($config) {
-			return new MySQLAdapter(array(
-				"host" => $config->database->host,
-				"username" => $config->database->username,
-				"password" => $config->database->password,
-				"dbname" => $config->database->name
-			));
-		};
-	}
+        /**
+         * Database connection is created based in the parameters defined in the configuration file
+         */
+        $di['db'] = function () use ($config) {
+            return new MySQLAdapter(array(
+                "host" => $config->database->host,
+                "username" => $config->database->username,
+                "password" => $config->database->password,
+                "dbname" => $config->database->name
+            ));
+        };
+    }
 }

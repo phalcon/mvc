@@ -11,80 +11,79 @@ use Phalcon\Db\Adapter\Pdo\Mysql as Database;
 
 try {
 
-	/**
-	 * Read the configuration
-	 */
-	$config = include __DIR__ . "/../app/config/config.php";
+    /**
+     * Read the configuration
+     */
+    $config = include __DIR__ . "/../app/config/config.php";
 
-	$loader = new Loader();
+    $loader = new Loader();
 
-	/**
-	 * We're a registering a set of directories taken from the configuration file
-	 */
-	$loader->registerDirs(
-		array(
-			$config->application->controllersDir,
-			$config->application->modelsDir
-		)
-	)->register();
+    /**
+     * We're a registering a set of directories taken from the configuration file
+     */
+    $loader->registerDirs(
+        array(
+            $config->application->controllersDir,
+            $config->application->modelsDir
+        )
+    )->register();
 
-	/**
-	 * The FactoryDefault Dependency Injector automatically register the right services providing a full stack framework
-	 */
-	$di = new FactoryDefault();
+    /**
+     * The FactoryDefault Dependency Injector automatically register the right services providing a full stack framework
+     */
+    $di = new FactoryDefault();
 
-	/**
-	 * The URL component is used to generate all kind of urls in the application
-	 */
-	$di->set('url', function() use ($config) {
-		$url = new UrlResolver();
-		$url->setBaseUri($config->application->baseUri);
-		return $url;
-	});
+    /**
+     * The URL component is used to generate all kind of urls in the application
+     */
+    $di->set('url', function () use ($config) {
+        $url = new UrlResolver();
+        $url->setBaseUri($config->application->baseUri);
+        return $url;
+    });
 
-	/**
-	 * Setting up the view component
-	 */
-	$di->set('view', function() use ($config) {
-		$view = new View();
-		$view->setViewsDir($config->application->viewsDir);
-		return $view;
-	});
+    /**
+     * Setting up the view component
+     */
+    $di->set('view', function () use ($config) {
+        $view = new View();
+        $view->setViewsDir($config->application->viewsDir);
+        return $view;
+    });
 
-	/**
-	 * Database connection is created based in the parameters defined in the configuration file
-	 */
-	$di->set('db', function() use ($config) {
-		return new Database(array(
-			"host"     => $config->database->host,
-			"username" => $config->database->username,
-			"password" => $config->database->password,
-			"dbname"   => $config->database->name
-		));
-	});
+    /**
+     * Database connection is created based in the parameters defined in the configuration file
+     */
+    $di->set('db', function () use ($config) {
+        return new Database(array(
+            "host"     => $config->database->host,
+            "username" => $config->database->username,
+            "password" => $config->database->password,
+            "dbname"   => $config->database->name
+        ));
+    });
 
-	/**
-	 * If the configuration specify the use of metadata adapter use it or use memory otherwise
-	 */
-	$di->set('modelsMetadata', function() {
-		return new MemoryMetaData();
-	});
+    /**
+     * If the configuration specify the use of metadata adapter use it or use memory otherwise
+     */
+    $di->set('modelsMetadata', function () {
+        return new MemoryMetaData();
+    });
 
-	/**
-	 * Start the session the first time some component request the session service
-	 */
-	$di->set('session', function() {
-		$session = new Session();
-		$session->start();
-		return $session;
-	});
+    /**
+     * Start the session the first time some component request the session service
+     */
+    $di->set('session', function () {
+        $session = new Session();
+        $session->start();
+        return $session;
+    });
 
-	/**
-	 * Handle the request
-	 */
-	$application = new Application($di);
-	echo $application->handle()->getContent();
-
+    /**
+     * Handle the request
+     */
+    $application = new Application($di);
+    echo $application->handle()->getContent();
 } catch (\Exception $e) {
-	echo $e->getMessage();
+    echo $e->getMessage();
 }

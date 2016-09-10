@@ -11,8 +11,8 @@ use Phalcon\Db\Adapter\Pdo\Mysql as Database;
 $loader = new Loader();
 
 $loader->registerDirs(array(
-	'../apps/controllers/',
-	'../apps/models/'
+    '../apps/controllers/',
+    '../apps/models/'
 ));
 
 $loader->register();
@@ -32,19 +32,19 @@ $di->set('response', 'Phalcon\Http\Response');
 $di->set('request', 'Phalcon\Http\Request');
 
 //Registering the view component
-$di->set('view', function(){
-	$view = new View();
-	$view->setViewsDir('../apps/views/');
-	return $view;
+$di->set('view', function () {
+    $view = new View();
+    $view->setViewsDir('../apps/views/');
+    return $view;
 });
 
-$di->set('db', function(){
-	return new Database(array(
-		"host" => "localhost",
-		"username" => "root",
-		"password" => "",
-		"dbname" => "invo"
-	));
+$di->set('db', function () {
+    return new Database(array(
+        "host" => "localhost",
+        "username" => "root",
+        "password" => "",
+        "dbname" => "invo"
+    ));
 });
 
 //Registering the Models-Metadata
@@ -54,11 +54,9 @@ $di->set('modelsMetadata', 'Phalcon\Mvc\Model\Metadata\Memory');
 $di->set('modelsManager', 'Phalcon\Mvc\Model\Manager');
 
 try {
+    $application = new Application($di);
 
-	$application = new Application($di);
-
-	echo $application->handle()->getContent();
-
+    echo $application->handle()->getContent();
 } catch (Exception $e) {
-	echo $e->getMessage();
+    echo $e->getMessage();
 }

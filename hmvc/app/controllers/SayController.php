@@ -1,13 +1,13 @@
 <?php
 
-use Phalcon\Mvc\Controller,
-	Phalcon\Http\Response;
+use Phalcon\Mvc\Controller;
+use Phalcon\Http\Response;
 
 class SayController extends Controller
 {
 
-	public function helloAction()
-	{
-		return new Response('hello there');
-	}
+    public function helloAction()
+    {
+        return new Response('hello there');
+    }
 }

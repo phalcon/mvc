@@ -11,26 +11,26 @@ use Phalcon\Mvc\Model\Metadata\Memory as MemoryMetaData;
 $di = new FactoryDefault();
 
 //Registering a dispatcher
-$di->set('dispatcher', function(){
+$di->set('dispatcher', function () {
     $dispatcher = new Dispatcher();
     $dispatcher->setDefaultNamespace('Single\Controllers\\');
     return $dispatcher;
 }, true);
 
 //Registering the view component
-$di->set('view', function(){
+$di->set('view', function () {
     $view = new View();
     $view->setViewsDir('../App/Views/');
     return $view;
 }, true);
 
-$di->set('url', function(){
+$di->set('url', function () {
     $url = new UrlProvider();
     $url->setBaseUri('/mvc/single-camelized-dirs/');
     return $url;
 }, true);
 
-$di->set('db', function(){
+$di->set('db', function () {
     return new Database(array(
         "host" => "localhost",
         "username" => "root",

@@ -1,8 +1,8 @@
 <?php
-use Phalcon\DI, 
-    Phalcon\DI\FactoryDefault;
+use Phalcon\DI;
+use Phalcon\DI\FactoryDefault;
     
-ini_set('display_errors',1);
+ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 define('ROOT_PATH', __DIR__);
@@ -28,7 +28,7 @@ $loader->registerDirs(array(
 
 $loader->registerNamespaces(array(
     'Modules\Services' => PATH_SERVICES,
-    'Modules\Models' => PATH_MODELS, 
+    'Modules\Models' => PATH_MODELS,
     'Phalcon' => __DIR__ . '../vendor/phalcon/incubator/Library/Phalcon'
 ));
 

@@ -28,7 +28,6 @@ try {
     require __DIR__ . '/../apps/config/modules.php';
 
     echo $application->handle()->getContent();
-
 } catch (Phalcon\Exception $e) {
     echo $e->getMessage();
 } catch (PDOException $e) {

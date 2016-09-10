@@ -10,83 +10,81 @@ use Phalcon\Mvc\Application as BaseApplication;
 class Application extends BaseApplication
 {
 
-	/**
-	 * Register the services here to make them general or register in the ModuleDefinition to make them module-specific
-	 */
-	protected function registerServices()
-	{
+    /**
+     * Register the services here to make them general or register in the ModuleDefinition to make them module-specific
+     */
+    protected function registerServices()
+    {
 
-		$di = new FactoryDefault();
+        $di = new FactoryDefault();
 
-		$loader = new Loader();
+        $loader = new Loader();
 
-		/**
-		 * We're a registering a set of directories taken from the configuration file
-		 */
-		$loader->registerDirs(
-			array(
-				__DIR__ . '/../apps/library/'
-			)
-		)->register();
+        /**
+         * We're a registering a set of directories taken from the configuration file
+         */
+        $loader->registerDirs(
+            array(
+                __DIR__ . '/../apps/library/'
+            )
+        )->register();
 
-		//Registering a router
-		$di->set('router', function(){
+        //Registering a router
+        $di->set('router', function () {
 
-			$router = new Router();
+            $router = new Router();
 
-			$router->setDefaultModule("frontend");
+            $router->setDefaultModule("frontend");
 
-			$router->add('/:controller/:action', array(
-				'module' => 'frontend',
-				'controller' => 1,
-				'action' => 2,
-			));
+            $router->add('/:controller/:action', array(
+                'module' => 'frontend',
+                'controller' => 1,
+                'action' => 2,
+            ));
 
-			$router->add("/login", array(
-				'module' => 'backend',
-				'controller' => 'login',
-				'action' => 'index',
-			));
+            $router->add("/login", array(
+                'module' => 'backend',
+                'controller' => 'login',
+                'action' => 'index',
+            ));
 
-			$router->add("/admin/products/:action", array(
-				'module' => 'backend',
-				'controller' => 'products',
-				'action' => 1,
-			));
+            $router->add("/admin/products/:action", array(
+                'module' => 'backend',
+                'controller' => 'products',
+                'action' => 1,
+            ));
 
-			$router->add("/products/:action", array(
-				'module' => 'frontend',
-				'controller' => 'products',
-				'action' => 1,
-			));
+            $router->add("/products/:action", array(
+                'module' => 'frontend',
+                'controller' => 'products',
+                'action' => 1,
+            ));
 
-			return $router;
+            return $router;
+        });
 
-		});
+        $this->setDI($di);
+    }
 
-		$this->setDI($di);
-	}
+    public function main()
+    {
 
-	public function main()
-	{
+        $this->registerServices();
 
-		$this->registerServices();
+        //Register the installed modules
+        $this->registerModules(array(
+            'frontend' => array(
+                'className' => 'Multiple\Frontend\Module',
+                'path' => '../apps/frontend/Module.php'
+            ),
+            'backend' => array(
+                'className' => 'Multiple\Backend\Module',
+                'path' => '../apps/backend/Module.php'
+            )
+        ));
 
-		//Register the installed modules
-		$this->registerModules(array(
-			'frontend' => array(
-				'className' => 'Multiple\Frontend\Module',
-				'path' => '../apps/frontend/Module.php'
-			),
-			'backend' => array(
-				'className' => 'Multiple\Backend\Module',
-				'path' => '../apps/backend/Module.php'
-			)
-		));
-
-		echo $this->handle()->getContent();
-	}
-
+        echo $this->handle()->getContent();
+    }
 }
 
 $application = new Application();

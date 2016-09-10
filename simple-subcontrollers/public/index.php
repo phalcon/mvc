@@ -6,28 +6,27 @@ use Phalcon\Mvc\Application;
 
 try {
 
-	/**
-	 * Read the configuration
-	 */
-	$config = include __DIR__ . "/../app/config/config.php";
+    /**
+     * Read the configuration
+     */
+    $config = include __DIR__ . "/../app/config/config.php";
 
-	/**
-	 * Read auto-loader
-	 */
-	include __DIR__ . "/../app/config/loader.php";
+    /**
+     * Read auto-loader
+     */
+    include __DIR__ . "/../app/config/loader.php";
 
-	/**
-	 * Read services
-	 */
-	include __DIR__ . "/../app/config/services.php";
+    /**
+     * Read services
+     */
+    include __DIR__ . "/../app/config/services.php";
 
-	/**
-	 * Handle the request
-	 */
-	$application = new Application($di);
+    /**
+     * Handle the request
+     */
+    $application = new Application($di);
 
-	echo $application->handle()->getContent();
-
+    echo $application->handle()->getContent();
 } catch (\Exception $e) {
-	echo $e->getMessage();
+    echo $e->getMessage();
 }
