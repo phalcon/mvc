@@ -2,7 +2,6 @@
 
 namespace Modules\Models\Entities;
 
-
 use Phalcon\Mvc\Model\Validator\Email as Email;
 
 class User extends \Phalcon\Mvc\Model

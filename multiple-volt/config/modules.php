@@ -1,11 +1,15 @@
 <?php
 
+use Multiple\Frontend\Module as FrontendModule;
+
 /**
  * Register application modules
  */
-$application->registerModules(array(
-	'frontend' => array(
-		'className' => 'Multiple\Frontend\Module',
-		'path' => __DIR__ . '/../apps/frontend/Module.php'
-	)
-));
+$application->registerModules(
+	[
+    	"frontend" => [
+        	"className" => FrontendModule::class,
+        	"path"      => __DIR__ . "/../apps/frontend/Module.php",
+    	]
+	]
+);

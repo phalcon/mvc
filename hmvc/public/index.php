@@ -1,88 +1,102 @@
 <?php
 
-use Phalcon\Loader,
-	Phalcon\DiInterface,
-	Phalcon\DI\FactoryDefault,
-	Phalcon\Mvc\View,
-	Phalcon\Http\ResponseInterface,
-	Phalcon\Mvc\Application as MVCApplication;
+use Phalcon\Loader;
+use Phalcon\DiInterface;
+use Phalcon\DI\FactoryDefault;
+use Phalcon\Mvc\View;
+use Phalcon\Http\ResponseInterface;
+use Phalcon\Mvc\Application as MVCApplication;
 
 class HMVCApplication extends MVCApplication
 {
+    /**
+     * HMVCApplication Constructor
+     *
+     * @param DiInterface
+     */
+    public function __construct(DiInterface $di)
+    {
+        $loader = new Loader();
 
-	/**
-	 * HMVCApplication Constructor
-	 *
-	 * @param Phalcon\DiInterface
-	 */
-	public function __construct(DiInterface $di)
-	{
+        // Application Loader
+        $loader->registerDirs(
+            [
+                "../app/controllers/",
+            ]
+        );
 
-		$loader = new Loader();
+        $loader->register();
 
-		//Application Loader
-		$loader->registerDirs(
-			array('../app/controllers/')
-		)->register();
+        // Register the view service
+        $di["view"] = function () {
+            $view = new View();
 
-		//Register the view service
-		$di['view'] = function() {
-			$view = new View();
-			$view->setViewsDir('../app/views/');
-			return $view;
-		};
+            $view->setViewsDir("../app/views/");
 
-		//Register the app itself as a service
-		$di['app'] = $this;
+            return $view;
+        };
 
-		//Sets the parent Id
-		parent::setDI($di);
-	}
+        // Register the app itself as a service
+        $di["app"] = $this;
 
-	/**
-	 * Does a HMVC request in the application
-	 *
-	 * @param array $location
-	 * @param array $data
-	 * @return mixed
-	 */
-	public function request($location, $data=null)
-	{
-		$dispatcher = clone $this->getDI()->get('dispatcher');
+        //Sets the parent Id
+        parent::setDI($di);
+    }
 
-		if (isset($location['controller'])) {
-			$dispatcher->setControllerName($location['controller']);
-		} else {
-			$dispatcher->setControllerName('index');
-		}
+    /**
+     * Does a HMVC request in the application
+     *
+     * @param array $location
+     * @param array $data
+     *
+     * @return mixed
+     */
+    public function request(array $location, $data = null)
+    {
+        $di = $this->getDI();
 
-		if (isset($location['action'])) {
-			$dispatcher->setActionName($location['action']);
-		} else {
-			$dispatcher->setActionName('index');
-		}
+        $dispatcher = clone $di->get("dispatcher");
 
-		if (isset($location['params'])) {
-			if(is_array($location['params'])) {
-				$dispatcher->setParams($location['params']);
-			} else {
-				$dispatcher->setParams((array) $location['params']);
-			}
-		} else {
-			$dispatcher->setParams(array());
-		}
+        if (isset($location["controller"])) {
+            $dispatcher->setControllerName($location["controller"]);
+        } else {
+            $dispatcher->setControllerName("index");
+        }
 
-		$dispatcher->dispatch();
+        if (isset($location["action"])) {
+            $dispatcher->setActionName($location["action"]);
+        } else {
+            $dispatcher->setActionName("index");
+        }
 
-		$response = $dispatcher->getReturnedValue();
-		if ($response instanceof ResponseInterface) {
-			return $response->getContent();
-		}
+        if (isset($location["params"])) {
+            if (is_array($location["params"])) {
+                $dispatcher->setParams($location["params"]);
+            } else {
+                $dispatcher->setParams(
+                    (array) $location["params"]
+                );
+            }
+        } else {
+            $dispatcher->setParams(
+                []
+            );
+        }
 
-		return $response;
-	}
+        $dispatcher->dispatch();
+
+        $response = $dispatcher->getReturnedValue();
+
+        if ($response instanceof ResponseInterface) {
+            return $response->getContent();
+        }
+
+        return $response;
+    }
 }
 
-$app = new HMVCApplication(new FactoryDefault());
+$di = new FactoryDefault();
+
+$app = new HMVCApplication($di);
 
 echo $app->handle()->getContent();

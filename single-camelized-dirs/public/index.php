@@ -8,29 +8,27 @@ require "../App/Config/Loader.php";
 require "../App/Config/Services.php";
 
 try {
+    $eventsManager = new EventsManager;
 
-	$eventsManager = new EventsManager;
+    $eventsManager->attach(
+        'application:viewRender',
+        function ($event, $application, $view) use ($di) {
 
-	$eventsManager->attach(
-		'application:viewRender',
-		function($event, $application, $view) use ($di) {
+            $dispatcher = $di->getDispatcher();
 
-			$dispatcher = $di->getDispatcher();
+            $view->render(
+                Text::camelize($dispatcher->getControllerName()),
+                Text::camelize($dispatcher->getActionName()),
+                $dispatcher->getParams()
+            );
+        }
+    );
 
-			$view->render(
-				Text::camelize($dispatcher->getControllerName()),
-				Text::camelize($dispatcher->getActionName()),
-				$dispatcher->getParams()
-			);			
-		}
-	);
+    $application = new Application($di);
 
-	$application = new Application($di);
+    $application->setEventsManager($eventsManager);
 
-	$application->setEventsManager($eventsManager);
-
-	echo $application->handle()->getContent();
-
+    echo $application->handle()->getContent();
 } catch (\Exception $e) {
-	echo $e->getMessage();
+    echo $e->getMessage();
 }

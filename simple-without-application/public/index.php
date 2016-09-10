@@ -11,8 +11,8 @@ use Phalcon\Db\Adapter\Pdo\Mysql;
 $loader = new Loader();
 
 $loader->registerDirs(array(
-	'../apps/controllers/',
-	'../apps/models/'
+    '../apps/controllers/',
+    '../apps/models/'
 ));
 
 $loader->register();
@@ -29,19 +29,19 @@ $di->set('dispatcher', 'Phalcon\Mvc\Dispatcher');
 $di->set('response', 'Phalcon\Http\Response');
 
 //Registering the view component
-$di->set('view', function(){
-	$view = new \Phalcon\Mvc\View();
-	$view->setViewsDir('../apps/views/');
-	return $view;
+$di->set('view', function () {
+    $view = new \Phalcon\Mvc\View();
+    $view->setViewsDir('../apps/views/');
+    return $view;
 });
 
-$di->set('db', function(){
-	return new Database(array(
-		"host" => "localhost",
-		"username" => "root",
-		"password" => "",
-		"dbname" => "invo"
-	));
+$di->set('db', function () {
+    return new Database(array(
+        "host" => "localhost",
+        "username" => "root",
+        "password" => "",
+        "dbname" => "invo"
+    ));
 });
 
 //Registering the Models-Metadata
@@ -51,37 +51,35 @@ $di->set('modelsMetadata', 'Phalcon\Mvc\Model\Metadata\Memory');
 $di->set('modelsManager', 'Phalcon\Mvc\Model\Manager');
 
 try {
+    $router = $di->getShared('router');
+    $router->handle();
 
-	$router = $di->getShared('router');
-	$router->handle();
+    $view = $di->getShared('view');
 
-	$view = $di->getShared('view');
+    $dispatcher = $di->getShared('dispatcher');
 
-	$dispatcher = $di->getShared('dispatcher');
+    $dispatcher->setControllerName($router->getControllerName());
+    $dispatcher->setActionName($router->getActionName());
+    $dispatcher->setParams($router->getParams());
 
-	$dispatcher->setControllerName($router->getControllerName());
-	$dispatcher->setActionName($router->getActionName());
-	$dispatcher->setParams($router->getParams());
+    //Start the view
+    $view->start();
 
-	//Start the view
-	$view->start();
+    //Dispatch the request
+    $dispatcher->dispatch();
 
-	//Dispatch the request
-	$dispatcher->dispatch();
+    $view->render($dispatcher->getControllerName(), $dispatcher->getActionName(), $dispatcher->getParams());
 
-	$view->render($dispatcher->getControllerName(), $dispatcher->getActionName(), $dispatcher->getParams());
+    $view->finish();
 
-	$view->finish();
+    $response = $di->getShared('response');
 
-	$response = $di->getShared('response');
+    //Pass the output of the view to the response
+    $response->setContent($view->getContent());
 
-	//Pass the output of the view to the response
-	$response->setContent($view->getContent());
+    $response->sendHeaders();
 
-	$response->sendHeaders();
-
-	echo $response->getContent();
-
-} catch (\Exception $e){
-	echo $e->getMessage();
+    echo $response->getContent();
+} catch (\Exception $e) {
+    echo $e->getMessage();
 }

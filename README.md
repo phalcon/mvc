@@ -3,6 +3,8 @@ Phalcon MVC examples
 
 These are examples of MVC file structures you can employ using Phalcon >= 2.0.x
 
+For further documentation, check out the [Phalcon Docs](https://docs.phalconphp.com/).
+
 ## Simple
 This is a very simple MVC structure, it contains one model, two controllers and a view.
 This example does not implement namespaces. Services are defined in public/index.php
@@ -352,7 +354,7 @@ multiple-service-layer-model/
     │   └── UserServiceTest.php
     ├── TestHelper.php
     ├── UnitTestCase.php
-    └── phpunit.xm
+    └── phpunit.xml
 ```
 
 ## Micro

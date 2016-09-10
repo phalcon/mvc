@@ -25,7 +25,7 @@ $di['router'] = function () {
     
     $router->setUriSource(\Phalcon\Mvc\Router::URI_SOURCE_SERVER_REQUEST_URI);
     
-    $router->removeExtraSlashes(TRUE);
+    $router->removeExtraSlashes(true);
 
     return $router;
 };

@@ -7,65 +7,71 @@ use Phalcon\Mvc\View;
 use Phalcon\DiInterface;
 use Phalcon\Db\Adapter\Pdo\Mysql as DbAdapter;
 use Phalcon\Mvc\ModuleDefinitionInterface;
+use Phalcon\Mvc\View\Engine\Volt as VoltEngine;
 
 class Module implements ModuleDefinitionInterface
 {
+    /**
+     * Registers the module auto-loader
+     */
+    public function registerAutoloaders(DiInterface $di = null)
+    {
+        $loader = new Loader();
 
-	/**
-	 * Registers the module auto-loader
-	 */
-	public function registerAutoloaders(DiInterface $di = null)
-	{
+        $loader->registerNamespaces(
+            [
+                "Multiple\Frontend\Controllers" => __DIR__ . "/controllers/",
+                "Multiple\Frontend\Models"      => __DIR__ . "/models/",
+            ]
+        );
 
-		$loader = new Loader();
+        $loader->register();
+    }
 
-		$loader->registerNamespaces(array(
-			'Multiple\Frontend\Controllers' => __DIR__ . '/controllers/',
-			'Multiple\Frontend\Models' => __DIR__ . '/models/',
-		));
+    /**
+     * Registers the module-only services
+     *
+     * @param DiInterface $di
+     */
+    public function registerServices(DiInterface $di)
+    {
+        /**
+         * Read configuration
+         */
+        $config = include __DIR__ . "/config/config.php";
 
-		$loader->register();
-	}
+        /**
+         * Setting up the view component
+         */
+        $di["view"] = function () {
+            $view = new View();
 
-	/**
-	 * Registers the module-only services
-	 *
-	 * @param Phalcon\DI $di
-	 */
-	public function registerServices(DiInterface $di)
-	{
+            $view->setViewsDir(
+                __DIR__ . "/views/"
+            );
 
-		/**
-		 * Read configuration
-		 */
-		$config = include __DIR__ . "/config/config.php";
+            $view->registerEngines(
+                [
+                    ".volt" => VoltEngine::class,
+                ]
+            );
 
-		/**
-		 * Setting up the view component
-		 */
-		$di['view'] = function() {
+            return $view;
+        };
 
-			$view = new View();
-
-			$view->setViewsDir(__DIR__ . '/views/');
-
-			$view->registerEngines(array(
-				".volt" => 'Phalcon\Mvc\View\Engine\Volt'
-			));
-
-			return $view;
-		};
-
-		/**
-		 * Database connection is created based in the parameters defined in the configuration file
-		 */
-		$di['db'] = function() use ($config) {
-			return new DbAdapter(array(
-				"host" => $config->database->host,
-				"username" => $config->database->username,
-				"password" => $config->database->password,
-				"dbname" => $config->database->name
-			));
-		};
-	}
+        /**
+         * Database connection is created based in the parameters defined in the
+         * configuration file
+         */
+        $di["db"] = function () use ($config) {
+            return new DbAdapter(
+                [
+                    "host"     => $config->database->host,
+                    "username" => $config->database->username,
+                    "password" => $config->database->password,
+                    "dbname"   => $config->database->name,
+                ]
+            );
+        };
+    }
 }

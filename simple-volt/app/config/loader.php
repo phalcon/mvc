@@ -1,13 +1,17 @@
 <?php
 
-$loader = new \Phalcon\Loader();
+use Phalcon\Loader;
+
+$loader = new Loader();
 
 /**
  * We're a registering a set of directories taken from the configuration file
  */
 $loader->registerDirs(
-	array(
-		$config->application->controllersDir,
-		$config->application->modelsDir
-	)
-)->register();
+    [
+        $config->application->controllersDir,
+        $config->application->modelsDir,
+    ]
+);
+
+$loader->register();

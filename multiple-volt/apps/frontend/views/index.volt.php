@@ -5,5 +5,5 @@
 	</head>
 	<body>
 		<?php echo $this->getContent(); ?>
-	</body>
+    </body>
 </html>

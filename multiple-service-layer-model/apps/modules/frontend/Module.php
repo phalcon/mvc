@@ -59,7 +59,5 @@ class Module implements ModuleDefinitionInterface
                 "dbname" => $config->database->dbname
             ));
         };
-
     }
-
 }

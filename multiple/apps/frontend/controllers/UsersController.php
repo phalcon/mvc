@@ -7,8 +7,8 @@ use Phalcon\Mvc\Controller;
 class UsersController extends Controller
 {
 
-	public function indexAction()
-	{
-		echo '<br>', __METHOD__;
-	}
+    public function indexAction()
+    {
+        echo '<br>', __METHOD__;
+    }
 }
