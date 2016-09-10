@@ -9,31 +9,35 @@ use Phalcon\Mvc\Application as MVCApplication;
 
 class HMVCApplication extends MVCApplication
 {
-
     /**
      * HMVCApplication Constructor
      *
-     * @param Phalcon\DiInterface
+     * @param DiInterface
      */
     public function __construct(DiInterface $di)
     {
-
         $loader = new Loader();
 
-        //Application Loader
+        // Application Loader
         $loader->registerDirs(
-            array('../app/controllers/')
-        )->register();
+            [
+                "../app/controllers/",
+            ]
+        );
 
-        //Register the view service
-        $di['view'] = function () {
+        $loader->register();
+
+        // Register the view service
+        $di["view"] = function () {
             $view = new View();
-            $view->setViewsDir('../app/views/');
+
+            $view->setViewsDir("../app/views/");
+
             return $view;
         };
 
-        //Register the app itself as a service
-        $di['app'] = $this;
+        // Register the app itself as a service
+        $di["app"] = $this;
 
         //Sets the parent Id
         parent::setDI($di);
@@ -44,37 +48,45 @@ class HMVCApplication extends MVCApplication
      *
      * @param array $location
      * @param array $data
+     *
      * @return mixed
      */
-    public function request($location, $data = null)
+    public function request(array $location, $data = null)
     {
-        $dispatcher = clone $this->getDI()->get('dispatcher');
+        $di = $this->getDI();
 
-        if (isset($location['controller'])) {
-            $dispatcher->setControllerName($location['controller']);
+        $dispatcher = clone $di->get("dispatcher");
+
+        if (isset($location["controller"])) {
+            $dispatcher->setControllerName($location["controller"]);
         } else {
-            $dispatcher->setControllerName('index');
+            $dispatcher->setControllerName("index");
         }
 
-        if (isset($location['action'])) {
-            $dispatcher->setActionName($location['action']);
+        if (isset($location["action"])) {
+            $dispatcher->setActionName($location["action"]);
         } else {
-            $dispatcher->setActionName('index');
+            $dispatcher->setActionName("index");
         }
 
-        if (isset($location['params'])) {
-            if (is_array($location['params'])) {
-                $dispatcher->setParams($location['params']);
+        if (isset($location["params"])) {
+            if (is_array($location["params"])) {
+                $dispatcher->setParams($location["params"]);
             } else {
-                $dispatcher->setParams((array) $location['params']);
+                $dispatcher->setParams(
+                    (array) $location["params"]
+                );
             }
         } else {
-            $dispatcher->setParams(array());
+            $dispatcher->setParams(
+                []
+            );
         }
 
         $dispatcher->dispatch();
 
         $response = $dispatcher->getReturnedValue();
+
         if ($response instanceof ResponseInterface) {
             return $response->getContent();
         }
@@ -83,6 +95,8 @@ class HMVCApplication extends MVCApplication
     }
 }
 
-$app = new HMVCApplication(new FactoryDefault());
+$di = new FactoryDefault();
+
+$app = new HMVCApplication($di);
 
 echo $app->handle()->getContent();
