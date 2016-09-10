@@ -14,16 +14,16 @@ use Phalcon\Mvc\Model\Manager as ModelsManager;
 
 class Application extends BaseApplication
 {
-
     protected function registerAutoloaders()
     {
-
         $loader = new Loader();
 
-        $loader->registerDirs(array(
-            '../apps/controllers/',
-            '../apps/models/'
-        ));
+        $loader->registerDirs(
+            [
+                "../apps/controllers/",
+                "../apps/models/",
+            ]
+        );
 
         $loader->register();
     }
@@ -33,61 +33,87 @@ class Application extends BaseApplication
      */
     protected function registerServices()
     {
-
         $di = new DI();
 
         //Registering a router
-        $di->set('router', function () {
-            return new Router();
-        });
+        $di->set(
+            "router",
+            function () {
+                return new Router();
+            }
+        );
 
         //Registering a dispatcher
-        $di->set('dispatcher', function () {
-            return new Dispatcher();
-        });
+        $di->set(
+            "dispatcher",
+            function () {
+                return new Dispatcher();
+            }
+        );
 
         //Registering a Http\Response
-        $di->set('response', function () {
-            return new Response();
-        });
+        $di->set(
+            "response",
+            function () {
+                return new Response();
+            }
+        );
 
         //Registering a Http\Request
-        $di->set('request', function () {
-            return new Request();
-        });
+        $di->set(
+            "request",
+            function () {
+                return new Request();
+            }
+        );
 
         //Registering the view component
-        $di->set('view', function () {
-            $view = new View();
-            $view->setViewsDir('../apps/views/');
-            return $view;
-        });
+        $di->set(
+            "view",
+            function () {
+                $view = new View();
 
-        $di->set('db', function () {
-            return new Database(array(
-                "host" => "localhost",
-                "username" => "root",
-                "password" => "",
-                "dbname" => "invo"
-            ));
-        });
+                $view->setViewsDir("../apps/views/");
+
+                return $view;
+            }
+        );
+
+        $di->set(
+            "db",
+            function () {
+                return new Database(
+                    [
+                        "host"     => "localhost",
+                        "username" => "root",
+                        "password" => "",
+                        "dbname"   => "invo",
+                    ]
+                );
+            }
+        );
 
         //Registering the Models-Metadata
-        $di->set('modelsMetadata', function () {
-            return new MemoryMetaData();
-        });
+        $di->set(
+            "modelsMetadata",
+            function () {
+                return new MemoryMetaData();
+            }
+        );
 
         //Registering the Models Manager
-        $di->set('modelsManager', function () {
-            return new ModelsManager();
-        });
+        $di->set(
+            "modelsManager",
+            function () {
+                return new ModelsManager();
+            }
+        );
 
         $this->setDI($di);
     }
 
     public function main()
     {
-
         $this->registerServices();
         $this->registerAutoloaders();
 
@@ -97,6 +123,7 @@ class Application extends BaseApplication
 
 try {
     $application = new Application();
+
     $application->main();
 } catch (\Exception $e) {
     echo $e->getMessage();

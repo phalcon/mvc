@@ -5,7 +5,6 @@ use Phalcon\Mvc\Controller;
 
 class ProductsController extends Controller
 {
-
     public function indexAction()
     {
         $this->view->product = Products::findFirst();
@@ -13,6 +12,8 @@ class ProductsController extends Controller
 
     public function testAction()
     {
-        $this->view->setRenderLevel(View::LEVEL_NO_RENDER);
+        $this->view->setRenderLevel(
+            View::LEVEL_NO_RENDER
+        );
     }
 }
