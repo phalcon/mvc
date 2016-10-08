@@ -1,12 +1,15 @@
 <?php
+
 namespace Services;
+
+use Modules\Models\Services\Services;
 
 class UserServiceTest extends \UnitTestCase
 {
     public function testEmptyUser()
     {
-        $serviceUser = \Modules\Services\Services::getService('User');
-        
+        $serviceUser = Services::getService('User');
+
         $this->assertFalse($serviceUser->getLast());
     }
 }
