@@ -9,7 +9,6 @@ use Phalcon\Mvc\Application as BaseApplication;
 
 class Application extends BaseApplication
 {
-
     /**
      * Register the services here to make them general or register in the ModuleDefinition to make them module-specific
      */

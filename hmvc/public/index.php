@@ -12,7 +12,7 @@ class HMVCApplication extends MVCApplication
     /**
      * HMVCApplication Constructor
      *
-     * @param DiInterface
+     * @param DiInterface $di
      */
     public function __construct(DiInterface $di)
     {
@@ -39,7 +39,7 @@ class HMVCApplication extends MVCApplication
         // Register the app itself as a service
         $di["app"] = $this;
 
-        //Sets the parent Id
+        // Sets the parent Id
         parent::setDI($di);
     }
 
@@ -69,6 +69,8 @@ class HMVCApplication extends MVCApplication
             $dispatcher->setActionName("index");
         }
 
+        $params = [];
+
         if (isset($location["params"])) {
             if (is_array($location["params"])) {
                 $dispatcher->setParams($location["params"]);
@@ -77,12 +79,9 @@ class HMVCApplication extends MVCApplication
                     (array) $location["params"]
                 );
             }
-        } else {
-            $dispatcher->setParams(
-                []
-            );
         }
 
+        $dispatcher->setParams($params);
         $dispatcher->dispatch();
 
         $response = $dispatcher->getReturnedValue();

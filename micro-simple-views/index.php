@@ -3,8 +3,8 @@
 use Phalcon\Mvc\Micro;
 use Phalcon\Http\Response;
 
-require "config/config.php";
-require "config/services.php";
+require __DIR__ . "/config/config.php";
+require __DIR__ . "/config/services.php";
 
 $app = new Micro($di);
 

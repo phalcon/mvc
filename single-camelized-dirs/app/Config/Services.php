@@ -5,8 +5,6 @@ use Phalcon\Mvc\Dispatcher;
 use Phalcon\DI\FactoryDefault;
 use Phalcon\Mvc\Url as UrlProvider;
 use Phalcon\Db\Adapter\Pdo\Mysql as Database;
-use Phalcon\Mvc\Model\Manager as ModelsManager;
-use Phalcon\Mvc\Model\Metadata\Memory as MemoryMetaData;
 
 $di = new FactoryDefault();
 

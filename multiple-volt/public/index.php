@@ -1,7 +1,6 @@
 <?php
 
 use Phalcon\Mvc\Application;
-use Exception;
 
 error_reporting(E_ALL);
 

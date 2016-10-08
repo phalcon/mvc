@@ -40,7 +40,7 @@ abstract class UnitTestCase extends PhalconTestCase
      */
     public function __destruct()
     {
-        if (!$this->_loaded) {
+        if (!$this->loaded) {
             throw new \PHPUnit_Framework_IncompleteTestError('Please run parent::setUp().');
         }
     }

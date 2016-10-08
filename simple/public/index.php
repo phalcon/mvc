@@ -1,14 +1,15 @@
 <?php
 
+use Phalcon\Di;
 use Phalcon\Loader;
 use Phalcon\Mvc\View;
-use Phalcon\Db\Adapter\Pdo\Mysql as Database;
 use Phalcon\Mvc\Router;
-use Phalcon\Mvc\Dispatcher as MvcDispatcher;
-use Phalcon\Http\Response;
 use Phalcon\Http\Request;
-use Phalcon\Mvc\Model\Metadata\Memory as ModelMetadata;
+use Phalcon\Http\Response;
+use Phalcon\Mvc\Dispatcher as MvcDispatcher;
+use Phalcon\Db\Adapter\Pdo\Mysql as Database;
 use Phalcon\Mvc\Model\Manager as ModelManager;
+use Phalcon\Mvc\Model\Metadata\Memory as ModelMetadata;
 
 /**
  * Very simple MVC structure
@@ -25,21 +26,21 @@ $loader->registerDirs(
 
 $loader->register();
 
-$di = new DI();
+$di = new Di();
 
-//Registering a router
+// Registering a router
 $di->set("router", Router::class);
 
-//Registering a dispatcher
+// Registering a dispatcher
 $di->set("dispatcher", MvcDispatcher::class);
 
-//Registering a Http\Response
+// Registering a Http\Response
 $di->set("response", Response::class);
 
-//Registering a Http\Request
+// Registering a Http\Request
 $di->set("request", Request::class);
 
-//Registering the view component
+// Registering the view component
 $di->set(
     "view",
     function () {
