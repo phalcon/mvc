@@ -5,14 +5,16 @@ namespace Multiple\Frontend;
 use Phalcon\Loader;
 use Phalcon\Mvc\View;
 use Phalcon\DiInterface;
-use Phalcon\Db\Adapter\Pdo\Mysql as DbAdapter;
 use Phalcon\Mvc\ModuleDefinitionInterface;
+use Phalcon\Db\Adapter\Pdo\Mysql as DbAdapter;
 use Phalcon\Mvc\View\Engine\Volt as VoltEngine;
 
 class Module implements ModuleDefinitionInterface
 {
     /**
      * Registers the module auto-loader
+     *
+     * @param DiInterface $di
      */
     public function registerAutoloaders(DiInterface $di = null)
     {
@@ -20,8 +22,8 @@ class Module implements ModuleDefinitionInterface
 
         $loader->registerNamespaces(
             [
-                "Multiple\Frontend\Controllers" => __DIR__ . "/controllers/",
-                "Multiple\Frontend\Models"      => __DIR__ . "/models/",
+                'Multiple\Frontend\Controllers' => __DIR__ . "/controllers/",
+                'Multiple\Frontend\Models'      => __DIR__ . "/models/",
             ]
         );
 

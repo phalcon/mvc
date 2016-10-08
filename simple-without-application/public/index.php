@@ -2,6 +2,7 @@
 
 use Phalcon\Di;
 use Phalcon\Loader;
+use Phalcon\Mvc\View;
 use Phalcon\Db\Adapter\Pdo\Mysql;
 
 /**
@@ -10,10 +11,12 @@ use Phalcon\Db\Adapter\Pdo\Mysql;
 
 $loader = new Loader();
 
-$loader->registerDirs(array(
-    '../apps/controllers/',
-    '../apps/models/'
-));
+$loader->registerDirs(
+    [
+        '../apps/controllers/',
+        '../apps/models/'
+    ]
+);
 
 $loader->register();
 
@@ -30,18 +33,18 @@ $di->set('response', 'Phalcon\Http\Response');
 
 //Registering the view component
 $di->set('view', function () {
-    $view = new \Phalcon\Mvc\View();
+    $view = new View();
     $view->setViewsDir('../apps/views/');
     return $view;
 });
 
 $di->set('db', function () {
-    return new Database(array(
+    return new Mysql([
         "host" => "localhost",
         "username" => "root",
         "password" => "",
         "dbname" => "invo"
-    ));
+    ]);
 });
 
 //Registering the Models-Metadata

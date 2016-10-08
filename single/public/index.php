@@ -35,7 +35,7 @@ class Application extends BaseApplication
     {
         $di = new DI();
 
-        //Registering a router
+        // Registering a router
         $di->set(
             "router",
             function () {
@@ -43,7 +43,7 @@ class Application extends BaseApplication
             }
         );
 
-        //Registering a dispatcher
+        // Registering a dispatcher
         $di->set(
             "dispatcher",
             function () {
@@ -51,7 +51,7 @@ class Application extends BaseApplication
             }
         );
 
-        //Registering a Http\Response
+        // Registering a Http\Response
         $di->set(
             "response",
             function () {
@@ -59,7 +59,7 @@ class Application extends BaseApplication
             }
         );
 
-        //Registering a Http\Request
+        // Registering a Http\Request
         $di->set(
             "request",
             function () {
@@ -67,7 +67,7 @@ class Application extends BaseApplication
             }
         );
 
-        //Registering the view component
+        // Registering the view component
         $di->set(
             "view",
             function () {
@@ -93,7 +93,7 @@ class Application extends BaseApplication
             }
         );
 
-        //Registering the Models-Metadata
+        // Registering the Models-Metadata
         $di->set(
             "modelsMetadata",
             function () {
@@ -101,7 +101,7 @@ class Application extends BaseApplication
             }
         );
 
-        //Registering the Models Manager
+        // Registering the Models Manager
         $di->set(
             "modelsManager",
             function () {

@@ -6,53 +6,62 @@ use Phalcon\Loader;
 use Phalcon\Mvc\View;
 use Phalcon\Mvc\Dispatcher;
 use Phalcon\DiInterface;
+use Phalcon\Mvc\ModuleDefinitionInterface;
 use Phalcon\Db\Adapter\Pdo\Mysql as Database;
 
-class Module
+class Module implements ModuleDefinitionInterface
 {
-
-    public function registerAutoloaders()
+    /**
+     * Registers the module auto-loader
+     *
+     * @param DiInterface $di
+     */
+    public function registerAutoloaders(DiInterface $di = null)
     {
-
         $loader = new Loader();
 
-        $loader->registerNamespaces(array(
-            'Multiple\Backend\Controllers' => '../apps/backend/controllers/',
-            'Multiple\Backend\Models'      => '../apps/backend/models/',
-            'Multiple\Backend\Plugins'     => '../apps/backend/plugins/',
-        ));
+        $loader->registerNamespaces(
+            [
+                'Multiple\Backend\Controllers' => '../apps/backend/controllers/',
+                'Multiple\Backend\Models'      => '../apps/backend/models/',
+                'Multiple\Backend\Plugins'     => '../apps/backend/plugins/',
+            ]
+        );
 
         $loader->register();
     }
 
     /**
-     * Register the services here to make them general or register in the ModuleDefinition to make them module-specific
+     * Registers services related to the module
+     *
+     * @param DiInterface $di
      */
     public function registerServices(DiInterface $di)
     {
-
-        //Registering a dispatcher
+        // Registering a dispatcher
         $di->set('dispatcher', function () {
             $dispatcher = new Dispatcher();
-            $dispatcher->setDefaultNamespace("Multiple\Backend\Controllers\\");
+            $dispatcher->setDefaultNamespace('Multiple\Backend\Controllers\\');
             return $dispatcher;
         });
 
-        //Registering the view component
+        // Registering the view component
         $di->set('view', function () {
             $view = new View();
             $view->setViewsDir('../apps/backend/views/');
             return $view;
         });
 
-        //Set a different connection in each module
+        // Set a different connection in each module
         $di->set('db', function () {
-            return new Database(array(
-                "host" => "localhost",
-                "username" => "root",
-                "password" => "secret",
-                "dbname" => "invo"
-            ));
+            return new Database(
+                [
+                    "host" => "localhost",
+                    "username" => "root",
+                    "password" => "secret",
+                    "dbname" => "invo"
+                ]
+            );
         });
     }
 }

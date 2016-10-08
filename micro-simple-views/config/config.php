@@ -1,9 +1,13 @@
 <?php
 
-$config = new \Phalcon\Config(array(
-    'application' => array(
-        'viewsDir'       => 'views/',
-        'cacheDir'       => 'cache/',
-        'baseUri'        => '/mvc/micro-simple-views/',
-    )
-));
+use Phalcon\Config;
+
+$config = new Config(
+    [
+        'application' => [
+            'viewsDir' => 'views/',
+            'cacheDir' => 'cache/',
+            'baseUri'  => '/mvc/micro-simple-views/',
+        ]
+    ]
+);
