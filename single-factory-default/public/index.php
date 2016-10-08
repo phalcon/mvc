@@ -2,15 +2,16 @@
 
 error_reporting(E_ALL);
 
-use Phalcon\DI\FactoryDefault;
+use Phalcon\Loader;
 use Phalcon\Mvc\View as View;
+use Phalcon\DI\FactoryDefault;
 use Phalcon\Mvc\Url as UrlResolver;
 use Phalcon\Mvc\Application as Application;
 use Phalcon\Session\Adapter\Files as Session;
 use Phalcon\Db\Adapter\Pdo\Mysql as Database;
+use Phalcon\Mvc\Model\MetaData\Memory as MemoryMetaData;
 
 try {
-
     /**
      * Read the configuration
      */
@@ -22,10 +23,10 @@ try {
      * We're a registering a set of directories taken from the configuration file
      */
     $loader->registerDirs(
-        array(
+        [
             $config->application->controllersDir,
             $config->application->modelsDir
-        )
+        ]
     )->register();
 
     /**
@@ -55,12 +56,14 @@ try {
      * Database connection is created based in the parameters defined in the configuration file
      */
     $di->set('db', function () use ($config) {
-        return new Database(array(
-            "host"     => $config->database->host,
-            "username" => $config->database->username,
-            "password" => $config->database->password,
-            "dbname"   => $config->database->name
-        ));
+        return new Database(
+            [
+                "host"     => $config->database->host,
+                "username" => $config->database->username,
+                "password" => $config->database->password,
+                "dbname"   => $config->database->name
+            ]
+        );
     });
 
     /**
