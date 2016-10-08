@@ -2,11 +2,22 @@
 
 namespace Multiple\Frontend;
 
-class Module
+use Phalcon\Loader;
+use Phalcon\DiInterface;
+use Phalcon\Mvc\Dispatcher;
+use Phalcon\Db\Adapter\Pdo\Mysql;
+use Phalcon\Mvc\ModuleDefinitionInterface;
+
+class Module implements ModuleDefinitionInterface
 {
-    public function registerAutoloaders()
+    /**
+     * Registers the module auto-loader
+     *
+     * @param DiInterface $di
+     */
+    public function registerAutoloaders(DiInterface $di = null)
     {
-        $loader = new \Phalcon\Loader();
+        $loader = new Loader();
 
         $loader->registerNamespaces(
             [
@@ -19,17 +30,19 @@ class Module
     }
 
     /**
-     * Register the services here to make them module-specific
+     * Registers services related to the module
+     *
+     * @param DiInterface $di
      */
-    public function registerServices($di)
+    public function registerServices(DiInterface $di)
     {
         // Registering a dispatcher
         $di->set(
             "dispatcher",
             function () {
-                $dispatcher = new \Phalcon\Mvc\Dispatcher();
+                $dispatcher = new Dispatcher();
 
-                $dispatcher->setDefaultNamespace("Multiple\Frontend\Controllers\\");
+                $dispatcher->setDefaultNamespace('Multiple\Frontend\Controllers\\');
 
                 return $dispatcher;
             }
@@ -38,7 +51,7 @@ class Module
         $di->set(
             "db",
             function () {
-                return new \Phalcon\Db\Adapter\Pdo\Mysql(
+                return new Mysql(
                     [
                         "host"     => "localhost",
                         "username" => "root",

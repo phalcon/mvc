@@ -1,27 +1,32 @@
 <?php
+
 namespace Modules\Modules\Frontend;
 
 use Phalcon\Loader;
 use Phalcon\Mvc\View;
-use Phalcon\Db\Adapter\Pdo\Mysql as DbAdapter;
+use Phalcon\DiInterface;
 use Phalcon\Mvc\ModuleDefinitionInterface;
+use Phalcon\Db\Adapter\Pdo\Mysql as DbAdapter;
 
 class Module implements ModuleDefinitionInterface
 {
     /**
      * Registers the module auto-loader
+     *
+     * @param DiInterface $di
      */
-    public function registerAutoloaders()
+    public function registerAutoloaders(DiInterface $di = null)
     {
-
         $loader = new Loader();
 
-        $loader->registerNamespaces(array(
-            'Modules\Modules\Frontend\Controllers' => __DIR__ . '/controllers/',
-            'Modules\Models\Entities' => __DIR__ . '/../../models/entities/',
-            'Modules\Models\Services' => __DIR__ . '/../../models/services/',
-            'Modules\Models\Repositories' => __DIR__ . '/../../models/repositories/'
-        ));
+        $loader->registerNamespaces(
+            [
+                'Modules\Modules\Frontend\Controllers' => __DIR__ . '/controllers/',
+                'Modules\Models\Entities' => __DIR__ . '/../../models/entities/',
+                'Modules\Models\Services' => __DIR__ . '/../../models/services/',
+                'Modules\Models\Repositories' => __DIR__ . '/../../models/repositories/'
+            ]
+        );
 
         $loader->register();
     }
@@ -29,9 +34,9 @@ class Module implements ModuleDefinitionInterface
     /**
      * Registers the module-only services
      *
-     * @param Phalcon\DI $di
+     * @param DiInterface $di
      */
-    public function registerServices($di)
+    public function registerServices(DiInterface $di)
     {
         /**
          * Read configuration
@@ -52,12 +57,14 @@ class Module implements ModuleDefinitionInterface
          * Database connection is created based in the parameters defined in the configuration file
          */
         $di['db'] = function () use ($config) {
-            return new DbAdapter(array(
-                "host" => $config->database->host,
-                "username" => $config->database->username,
-                "password" => $config->database->password,
-                "dbname" => $config->database->dbname
-            ));
+            return new DbAdapter(
+                [
+                    "host" => $config->database->host,
+                    "username" => $config->database->username,
+                    "password" => $config->database->password,
+                    "dbname" => $config->database->dbname
+                ]
+            );
         };
     }
 }

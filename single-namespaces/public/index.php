@@ -16,16 +16,16 @@ use Phalcon\Mvc\Model\Metadata\Memory as MemoryMetaData;
 
 class Application extends BaseApplication
 {
-
     protected function registerAutoloaders()
     {
-
         $loader = new Loader();
 
-        $loader->registerNamespaces(array(
-            'Single\Controllers' => '../apps/controllers/',
-            'Single\Models'      => '../apps/models/'
-        ));
+        $loader->registerNamespaces(
+            [
+                'Single\Controllers' => '../apps/controllers/',
+                'Single\Models'      => '../apps/models/'
+            ]
+        );
 
         $loader->register();
     }
@@ -35,32 +35,31 @@ class Application extends BaseApplication
      */
     protected function registerServices()
     {
-
         $di = new DI();
 
-        //Registering a router
+        // Registering a router
         $di->set('router', function () {
             return new Router();
         });
 
-        //Registering a dispatcher
+        // Registering a dispatcher
         $di->set('dispatcher', function () {
             $dispatcher = new Dispatcher();
             $dispatcher->setDefaultNamespace('Single\Controllers\\');
             return $dispatcher;
         });
 
-        //Registering a Http\Response
+        // Registering a Http\Response
         $di->set('response', function () {
             return new Response();
         });
 
-        //Registering a Http\Request
+        // Registering a Http\Request
         $di->set('request', function () {
             return new Request();
         });
 
-        //Registering the view component
+        // Registering the view component
         $di->set('view', function () {
             $view = new View();
             $view->setViewsDir('../apps/views/');
@@ -76,12 +75,12 @@ class Application extends BaseApplication
             ));
         });
 
-        //Registering the Models-Metadata
+        // Registering the Models-Metadata
         $di->set('modelsMetadata', function () {
             return new MemoryMetaData();
         });
 
-        //Registering the Models Manager
+        // Registering the Models Manager
         $di->set('modelsManager', function () {
             return new ModelsManager();
         });
@@ -92,13 +91,12 @@ class Application extends BaseApplication
     public function main()
     {
 
-        $this->_registerServices();
-        $this->_registerAutoloaders();
+        $this->registerServices();
+        $this->registerAutoloaders();
 
         echo $this->handle()->getContent();
     }
 }
-
 
 try {
     $application = new Application();
