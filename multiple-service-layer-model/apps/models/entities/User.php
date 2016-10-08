@@ -2,11 +2,12 @@
 
 namespace Modules\Models\Entities;
 
-use Phalcon\Mvc\Model\Validator\Email as Email;
+use Phalcon\Mvc\Model;
+use Phalcon\Validation;
+use Phalcon\Validation\Validator\Email as EmailValidator;
 
-class User extends \Phalcon\Mvc\Model
+class User extends Model
 {
-
     /**
      *
      * @var integer
@@ -18,7 +19,7 @@ class User extends \Phalcon\Mvc\Model
      * @var string
      */
     protected $name;
-     
+
     /**
      *
      * @var string
@@ -30,19 +31,19 @@ class User extends \Phalcon\Mvc\Model
      * @var string
      */
     protected $email;
-     
+
     /**
      *
      * @var string
      */
     protected $password;
-     
+
     /**
      *
      * @var string
      */
     protected $datetime;
-     
+
     /**
      * Method to set the value of field iduser
      *
@@ -186,18 +187,17 @@ class User extends \Phalcon\Mvc\Model
      */
     public function validation()
     {
+        $validator = new Validation();
 
-        $this->validate(
-            new Email(
-                array(
-                    "field"    => "email",
-                    "required" => true,
-                )
-            )
+        $validator->add(
+            'email', // your field name
+            new EmailValidator([
+                'model' => $this,
+                "message" => 'Please enter a correct email address'
+            ])
         );
-        if ($this->validationHasFailed() == true) {
-            return false;
-        }
+
+        return $this->validate($validator);
     }
 
     public function getSource()
