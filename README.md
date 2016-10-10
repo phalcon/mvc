@@ -202,6 +202,59 @@ single-camelized-dirs/
     └── index.php
 ```
 
+## Single-Service-Provider
+
+This a single-module [MVC][mvc-pattern] structure which shows a non-standard way of registering services:
+
+```
+single-service-provider/
+├── app
+│   ├── Bootstrap.php
+│   ├── Http
+│   │   ├── Controllers
+│   │   │   ├── Controller.php
+│   │   │   └── IndexController.php
+│   │   └── routes.php
+│   ├── Models
+│   └── Services
+│       ├── AbstractServiceProvider.php
+│       ├── ConfigServiceProvider.php
+│       ├── DatabaseServiceProvider.php
+│       ├── EscaperServiceProvider.php
+│       ├── EventManagerServiceProvider.php
+│       ├── ModelsMetadataServiceProvider.php
+│       ├── MvcDispatcherServiceProvider.php
+│       ├── PhpTemplateEngineServiceProvider.php
+│       ├── ResponseServiceProvider.php
+│       ├── RouterServiceProvider.php
+│       ├── ServiceProviderInterface.php
+│       ├── SessionServiceProvider.php
+│       ├── TagServiceProvider.php
+│       ├── UrlResolverServiceProvider.php
+│       ├── ViewServiceProvider.php
+│       └── VoltTemplateEngineServiceProvider.php
+├── bootstrap
+│   └── autoload.php
+├── config
+│   ├── application.php
+│   └── providers.php
+├── index.html
+├── public
+│   └── index.php
+├── resources
+│   └── views
+│       ├── index
+│       │   └── index.volt
+│       ├── index.volt
+│       └── partials
+│           └── content.volt
+└── storage
+    ├── cache
+    │   ├── data
+    │   └── volt
+    └── logs
+```
+
 ## Multiple
 
 This a multi-module [MVC][mvc-pattern] structure. This example implements two modules: frontend and backend.
