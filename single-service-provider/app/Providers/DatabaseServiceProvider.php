@@ -1,19 +1,24 @@
 <?php
 
-namespace App\Services;
+namespace App\Providers;
 
 use Phalcon\Db\Adapter\Pdo\Mysql;
 
 /**
- * \App\Services\DatabaseServiceProvider
+ * \App\Providers\DatabaseServiceProvider
  *
- * @package App\Services
+ * @package App\Providers
  */
 class DatabaseServiceProvider extends AbstractServiceProvider
 {
     /**
-     * Initialize the Database Connection.
-     * Database connection is created based in the parameters defined in the configuration file.
+     * The Service name.
+     * @var string
+     */
+    protected $serviceName = 'database';
+
+    /**
+     * Register application service.
      *
      * @return void
      */

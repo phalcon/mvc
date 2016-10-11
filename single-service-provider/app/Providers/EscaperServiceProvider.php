@@ -1,18 +1,24 @@
 <?php
 
-namespace App\Services;
+namespace App\Providers;
 
 use Phalcon\Escaper;
 
 /**
- * \App\Services\EscaperServiceProvider
+ * \App\Providers\EscaperServiceProvider
  *
- * @package App\Services
+ * @package App\Providers
  */
 class EscaperServiceProvider extends AbstractServiceProvider
 {
     /**
-     * Initialize the Escaper Service.
+     * The Service name.
+     * @var string
+     */
+    protected $serviceName = 'escaper';
+
+    /**
+     * Register application service.
      *
      * @return void
      */

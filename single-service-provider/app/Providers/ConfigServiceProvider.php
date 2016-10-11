@@ -1,18 +1,24 @@
 <?php
 
-namespace App\Services;
+namespace App\Providers;
 
 use Phalcon\Config;
 
 /**
- * \App\Services\ConfigServiceProvider
+ * \App\Providers\ConfigServiceProvider
  *
- * @package App\Services
+ * @package App\Providers
  */
 class ConfigServiceProvider extends AbstractServiceProvider
 {
     /**
-     * Initialize the Configuration.
+     * The Service name.
+     * @var string
+     */
+    protected $serviceName = 'config';
+
+    /**
+     * Register application service.
      *
      * @return void
      */

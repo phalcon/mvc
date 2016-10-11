@@ -1,18 +1,24 @@
 <?php
 
-namespace App\Services;
+namespace App\Providers;
 
 use Phalcon\Http\Response;
 
 /**
- * \App\Services\ResponseServiceProvider
+ * \App\Providers\ResponseServiceProvider
  *
- * @package App\Services
+ * @package App\Providers
  */
 class ResponseServiceProvider extends AbstractServiceProvider
 {
     /**
-     * Initialize the Response Service.
+     * The Service name.
+     * @var string
+     */
+    protected $serviceName = 'response';
+
+    /**
+     * Register application service.
      *
      * @return void
      */
