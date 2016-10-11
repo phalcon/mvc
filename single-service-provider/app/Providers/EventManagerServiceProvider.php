@@ -1,18 +1,24 @@
 <?php
 
-namespace App\Services;
+namespace App\Providers;
 
 use Phalcon\Events\Manager;
 
 /**
- * \App\Services\EventManagerServiceProvider
+ * \App\Providers\EventManagerServiceProvider
  *
- * @package App\Services
+ * @package App\Providers
  */
 class EventManagerServiceProvider extends AbstractServiceProvider
 {
     /**
-     * Initialize the Events Manager.
+     * The Service name.
+     * @var string
+     */
+    protected $serviceName = 'eventsManager';
+
+    /**
+     * Register application service.
      *
      * @return void
      */

@@ -1,18 +1,24 @@
 <?php
 
-namespace App\Services;
+namespace App\Providers;
 
 use Phalcon\Tag;
 
 /**
- * \App\Services\TagServiceProvider
+ * \App\Providers\TagServiceProvider
  *
  * @package App\Services
  */
 class TagServiceProvider extends AbstractServiceProvider
 {
     /**
-     * Initialize the Tag Service.
+     * The Service name.
+     * @var string
+     */
+    protected $serviceName = 'tag';
+
+    /**
+     * Register application service.
      *
      * @return void
      */

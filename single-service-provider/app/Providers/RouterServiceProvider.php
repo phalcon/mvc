@@ -1,17 +1,22 @@
 <?php
 
-namespace App\Services;
+namespace App\Providers;
 
 /**
- * \App\Services\PhpTemplateEngineServiceProvider
+ * \App\Providers\PhpTemplateEngineServiceProvider
  *
- * @package App\Services
+ * @package App\Providers
  */
 class RouterServiceProvider extends AbstractServiceProvider
 {
     /**
-     * Initialize the Php Template Engine.
-     * Generate Template files uses PHP itself as the template engine.
+     * The Service name.
+     * @var string
+     */
+    protected $serviceName = 'router';
+
+    /**
+     * Register application service.
      *
      * @return void
      */

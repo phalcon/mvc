@@ -1,18 +1,24 @@
 <?php
 
-namespace App\Services;
+namespace App\Providers;
 
 use Phalcon\Mvc\View;
 
 /**
- * \App\Services\ViewServiceProvider
+ * \App\Providers\ViewServiceProvider
  *
- * @package App\Services
+ * @package App\Providers
  */
 class ViewServiceProvider extends AbstractServiceProvider
 {
     /**
-     * Initialize the View.
+     * The Service name.
+     * @var string
+     */
+    protected $serviceName = 'view';
+
+    /**
+     * Register application service.
      *
      * @return void
      */

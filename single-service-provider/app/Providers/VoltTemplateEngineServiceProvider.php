@@ -1,20 +1,26 @@
 <?php
 
-namespace App\Services;
+namespace App\Providers;
 
 use Phalcon\DiInterface;
 use Phalcon\Mvc\View\Engine\Volt;
 use Phalcon\Mvc\ViewBaseInterface;
 
 /**
- * \App\Services\VoltTemplateEngineServiceProvider
+ * \App\Providers\VoltTemplateEngineServiceProvider
  *
- * @package App\Services
+ * @package App\Providers
  */
 class VoltTemplateEngineServiceProvider extends AbstractServiceProvider
 {
     /**
-     * Initialize the Volt Template Engine.
+     * The Service name.
+     * @var string
+     */
+    protected $serviceName = 'voltEngine';
+
+    /**
+     * Register application service.
      *
      * @return void
      */

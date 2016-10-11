@@ -5,7 +5,7 @@ namespace App;
 use Phalcon\Di;
 use Phalcon\DiInterface;
 use Phalcon\Mvc\Application;
-use App\Services\ServiceProviderInterface;
+use App\Providers\ServiceProviderInterface;
 
 /**
  * \App\Bootstrap
@@ -110,20 +110,29 @@ class Bootstrap
     }
 
     /**
+     * Initialize Services in the Dependency Injector Container.
+     *
      * @param string[] $providers
      */
     protected function initializeServices(array $providers)
     {
         foreach ($providers as $name => $class) {
-            $serviceProvider = new $class($name, $this->di);
-            if (!$serviceProvider instanceof ServiceProviderInterface) {
-                throw new \InvalidArgumentException(
-                    "The service '$name' must implement " . ServiceProviderInterface::class
-                );
-            }
-
-            $serviceProvider->register();
-            $this->serviceProviders[$name] = $serviceProvider;
+            $this->initializeService(new $class($this->di));
         }
+    }
+
+    /**
+     * Initialize the Service in the Dependency Injector Container.
+     *
+     * @param ServiceProviderInterface $serviceProvider
+     *
+     * @return $this
+     */
+    protected function initializeService(ServiceProviderInterface $serviceProvider)
+    {
+        $serviceProvider->register();
+        $this->serviceProviders[$serviceProvider->getName()] = $serviceProvider;
+
+        return $this;
     }
 }

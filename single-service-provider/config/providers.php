@@ -1,23 +1,23 @@
 <?php
 
-use App\Services;
+use App\Providers;
 
 return [
     // Application Service Providers
-    'eventsManager'  => Services\EventManagerServiceProvider::class,
-    'config'         => Services\ConfigServiceProvider::class,
-    'database'       => Services\DatabaseServiceProvider::class,
-    'modelsMetadata' => Services\ModelsMetadataServiceProvider::class,
-    'tag'            => Services\TagServiceProvider::class,
-    'escaper'        => Services\EscaperServiceProvider::class,
-    'session'        => Services\SessionServiceProvider::class,
-    'dispatcher'     => Services\MvcDispatcherServiceProvider::class,
-    'voltEngine'     => Services\VoltTemplateEngineServiceProvider::class,
-    'phpEngine'      => Services\PhpTemplateEngineServiceProvider::class,
-    'view'           => Services\ViewServiceProvider::class,
-    'url'            => Services\UrlResolverServiceProvider::class,
-    'router'         => Services\RouterServiceProvider::class,
-    'response'       => Services\ResponseServiceProvider::class,
+    Providers\EventManagerServiceProvider::class,
+    Providers\ConfigServiceProvider::class,
+    Providers\DatabaseServiceProvider::class,
+    Providers\ModelsMetadataServiceProvider::class,
+    Providers\TagServiceProvider::class,
+    Providers\EscaperServiceProvider::class,
+    Providers\SessionServiceProvider::class,
+    Providers\MvcDispatcherServiceProvider::class,
+    Providers\VoltTemplateEngineServiceProvider::class,
+    Providers\PhpTemplateEngineServiceProvider::class,
+    Providers\ViewServiceProvider::class,
+    Providers\UrlResolverServiceProvider::class,
+    Providers\RouterServiceProvider::class,
+    Providers\ResponseServiceProvider::class,
 
     // Third Party Providers
     // ...

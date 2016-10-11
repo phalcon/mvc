@@ -1,18 +1,24 @@
 <?php
 
-namespace App\Services;
+namespace App\Providers;
 
 use Phalcon\Mvc\Model\Metadata\Memory;
 
 /**
- * \App\Services\ModelsMetadataServiceProvider
+ * \App\Providers\ModelsMetadataServiceProvider
  *
- * @package App\Services
+ * @package App\Providers
  */
 class ModelsMetadataServiceProvider extends AbstractServiceProvider
 {
     /**
-     * Initialize the Metadata Adapter.
+     * The Service name.
+     * @var string
+     */
+    protected $serviceName = 'modelsMetadata';
+
+    /**
+     * Register application service.
      *
      * @return void
      */

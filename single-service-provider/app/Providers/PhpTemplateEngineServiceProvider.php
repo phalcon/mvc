@@ -1,21 +1,26 @@
 <?php
 
-namespace App\Services;
+namespace App\Providers;
 
 use Phalcon\DiInterface;
 use Phalcon\Mvc\ViewBaseInterface;
 use Phalcon\Mvc\View\Engine\Php as PhpEngine;
 
 /**
- * \App\Services\PhpTemplateEngineServiceProvider
+ * \App\Providers\PhpTemplateEngineServiceProvider
  *
- * @package App\Services
+ * @package App\Providers
  */
 class PhpTemplateEngineServiceProvider extends AbstractServiceProvider
 {
     /**
-     * Initialize the Php Template Engine.
-     * Generate Template files uses PHP itself as the template engine.
+     * The Service name.
+     * @var string
+     */
+    protected $serviceName = 'phpEngine';
+
+    /**
+     * Register application service.
      *
      * @return void
      */

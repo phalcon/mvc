@@ -1,19 +1,24 @@
 <?php
 
-namespace App\Services;
+namespace App\Providers;
 
 use Phalcon\Mvc\Url;
 
 /**
- * \App\Services\UrlResolverServiceProvider
+ * \App\Providers\UrlResolverServiceProvider
  *
- * @package App\Services
+ * @package App\Providers
  */
 class UrlResolverServiceProvider extends AbstractServiceProvider
 {
     /**
-     * Initialize the Url Resolver.
-     * The URL component is used to generate all kind of urls in the application
+     * The Service name.
+     * @var string
+     */
+    protected $serviceName = 'url';
+
+    /**
+     * Register application service.
      *
      * @return void
      */

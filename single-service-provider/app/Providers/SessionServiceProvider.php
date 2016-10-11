@@ -1,19 +1,24 @@
 <?php
 
-namespace App\Services;
+namespace App\Providers;
 
 use Phalcon\Session\Adapter\Files;
 
 /**
- * \App\Services\SessionServiceProvider
+ * \App\Providers\SessionServiceProvider
  *
- * @package App\Services
+ * @package App\Providers
  */
 class SessionServiceProvider extends AbstractServiceProvider
 {
     /**
-     * Initialize the Session Adapter.
-     * Start the session the first time some component request the session service.
+     * The Service name.
+     * @var string
+     */
+    protected $serviceName = 'session';
+
+    /**
+     * Register application service.
      *
      * @return void
      */

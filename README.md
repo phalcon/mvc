@@ -216,7 +216,7 @@ single-service-provider/
 │   │   │   └── IndexController.php
 │   │   └── routes.php
 │   ├── Models
-│   └── Services
+│   └── Providers
 │       ├── AbstractServiceProvider.php
 │       ├── ConfigServiceProvider.php
 │       ├── DatabaseServiceProvider.php
