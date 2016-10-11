@@ -76,7 +76,7 @@ class HMVCApplication extends MVCApplication
                 $dispatcher->setParams($location["params"]);
             } else {
                 $dispatcher->setParams(
-                    (array) $location["params"]
+                    (array)$location["params"]
                 );
             }
         }

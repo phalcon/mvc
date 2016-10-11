@@ -12,7 +12,7 @@ try {
     /**
      * Read the configuration
      */
-    $config = include __DIR__.'/../config/config.php';
+    $config = include __DIR__ . '/../config/config.php';
 
     $di = new FactoryDefault();
 
@@ -22,6 +22,7 @@ try {
     $di->set('url', function () use ($config) {
         $url = new \Phalcon\Mvc\Url();
         $url->setBaseUri($config->application->baseUri);
+
         return $url;
     });
 
@@ -29,12 +30,14 @@ try {
      * Database connection is created based in the parameters defined in the configuration file
      */
     $di->set('db', function () use ($config) {
-        return new Database(array(
-            "host" => $config->database->host,
-            "username" => $config->database->username,
-            "password" => $config->database->password,
-            "dbname" => $config->database->name
-        ));
+        return new Database(
+            [
+                "host"     => $config->database->host,
+                "username" => $config->database->username,
+                "password" => $config->database->password,
+                "dbname"   => $config->database->name
+            ]
+        );
     });
 
     /**
@@ -42,11 +45,9 @@ try {
      */
     $loader = new Loader();
 
-    $loader->registerDirs(
-        array(
-            $config->application->modelsDir
-        )
-    )->register();
+    $loader
+        ->registerDirs([$config->application->modelsDir])
+        ->register();
 
     /**
      * Starting the application
