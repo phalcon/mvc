@@ -14,56 +14,63 @@ use Phalcon\Session\Adapter\Files as SessionAdapter;
  */
 $di = new FactoryDefault();
 
-$di->set('router', function () {
+$di->setShared('router', function () {
     return require __DIR__ . '/routes.php';
-}, true);
+});
 
 /**
  * The URL component is used to generate all kind of urls in the application
  */
-$di->set('url', function () use ($config) {
+$di->setShared('url', function () use ($config) {
     $url = new UrlResolver();
     $url->setBaseUri($config->application->baseUri);
+
     return $url;
-}, true);
+});
 
 /**
  * Setting up the view component
  */
-$di->set('view', function () use ($config) {
+$di->setShared('view', function () use ($config) {
 
     $view = new View();
 
     $view->setViewsDir($config->application->viewsDir);
 
-    $view->registerEngines(array(
-        '.volt' => function ($view, $di) use ($config) {
+    $view->registerEngines(
+        [
+            '.volt'  => function ($view, $di) use ($config) {
+                $volt = new VoltEngine($view, $di);
 
-            $volt = new VoltEngine($view, $di);
+                $volt->setOptions(
+                    [
+                        'compiledPath'      => $config->application->cacheDir,
+                        'compiledSeparator' => '_'
+                    ]
+                );
 
-            $volt->setOptions(array(
-                'compiledPath' => $config->application->cacheDir,
-                'compiledSeparator' => '_'
-            ));
-
-            return $volt;
-        },
-        '.phtml' => 'Phalcon\Mvc\View\Engine\Php' // Generate Template files uses PHP itself as the template engine
-    ));
+                return $volt;
+            },
+            // Generate Template files uses PHP itself as the template engine
+            '.phtml' => 'Phalcon\Mvc\View\Engine\Php',
+        ]
+    );
 
     return $view;
-}, true);
+});
 
 /**
  * Database connection is created based in the parameters defined in the configuration file
  */
 $di->set('db', function () use ($config) {
-    return new DbAdapter(array(
-        'host' => $config->database->host,
-        'username' => $config->database->username,
-        'password' => $config->database->password,
-        'dbname' => $config->database->dbname
-    ));
+    return new DbAdapter(
+        [
+            'host'     => $config->database->host,
+            'username' => $config->database->username,
+            'password' => $config->database->password,
+            'dbname'   => $config->database->dbname
+        ]
+    );
 });
 
 /**
@@ -79,11 +86,13 @@ $di->set('modelsMetadata', function () use ($config) {
 $di->set('session', function () {
     $session = new SessionAdapter();
     $session->start();
+
     return $session;
 });
 
 $di->set('dispatcher', function () {
     $dispatcher = new Dispatcher();
     $dispatcher->setDefaultNamespace('MyApp\Controllers');
+
     return $dispatcher;
 });

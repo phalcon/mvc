@@ -65,10 +65,10 @@ try {
     $dispatcher->setActionName($router->getActionName());
     $dispatcher->setParams($router->getParams());
 
-    //Start the view
+    // Start the view
     $view->start();
 
-    //Dispatch the request
+    // Dispatch the request
     $dispatcher->dispatch();
 
     $view->render($dispatcher->getControllerName(), $dispatcher->getActionName(), $dispatcher->getParams());
@@ -77,7 +77,7 @@ try {
 
     $response = $di->getShared('response');
 
-    //Pass the output of the view to the response
+    // Pass the output of the view to the response
     $response->setContent($view->getContent());
 
     $response->sendHeaders();

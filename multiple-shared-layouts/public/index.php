@@ -16,23 +16,23 @@ try {
 
         $router = new \Phalcon\Mvc\Router(false);
 
-        $router->add('/admin', array(
-            'module' => 'backend',
+        $router->add('/admin', [
+            'module'     => 'backend',
             'controller' => 'index',
-            'action' => 'index'
-        ));
+            'action'     => 'index'
+        ]);
 
-        $router->add('/index', array(
-            'module' => 'frontend',
+        $router->add('/index', [
+            'module'     => 'frontend',
             'controller' => 'index',
-            'action' => 'index'
-        ));
+            'action'     => 'index'
+        ]);
 
-        $router->add('/', array(
-            'module' => 'frontend',
+        $router->add('/', [
+            'module'     => 'frontend',
             'controller' => 'index',
-            'action' => 'index'
-        ));
+            'action'     => 'index'
+        ]);
 
         return $router;
     };
@@ -43,6 +43,7 @@ try {
     $di->set('url', function () {
         $url = new \Phalcon\Mvc\Url();
         $url->setBaseUri('/mvc/multiple-shared-layouts/');
+
         return $url;
     });
 
@@ -52,6 +53,7 @@ try {
     $di->set('session', function () {
         $session = new \Phalcon\Session\Adapter\Files();
         $session->start();
+
         return $session;
     });
 
@@ -65,16 +67,18 @@ try {
     /**
      * Register application modules
      */
-    $application->registerModules(array(
-        'frontend' => array(
-            'className' => 'Modules\Frontend\Module',
-            'path' => '../apps/frontend/Module.php'
-        ),
-        'backend' => array(
-            'className' => 'Modules\Backend\Module',
-            'path' => '../apps/backend/Module.php'
-        )
-    ));
+    $application->registerModules(
+        [
+            'frontend' => [
+                'className' => 'Modules\Frontend\Module',
+                'path'      => '../apps/frontend/Module.php'
+            ],
+            'backend'  => [
+                'className' => 'Modules\Backend\Module',
+                'path'      => '../apps/backend/Module.php'
+            ]
+        ]
+    );
 
     echo $application->handle()->getContent();
 } catch (Phalcon\Exception $e) {

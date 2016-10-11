@@ -22,42 +22,40 @@ class Application extends BaseApplication
         /**
          * We're a registering a set of directories taken from the configuration file
          */
-        $loader->registerDirs(
-            array(
-                __DIR__ . '/../apps/library/'
-            )
-        )->register();
+        $loader
+            ->registerDirs([__DIR__ . '/../apps/library/'])
+            ->register();
 
-        //Registering a router
+        // Registering a router
         $di->set('router', function () {
 
             $router = new Router();
 
             $router->setDefaultModule("frontend");
 
-            $router->add('/:controller/:action', array(
-                'module' => 'frontend',
+            $router->add('/:controller/:action', [
+                'module'     => 'frontend',
                 'controller' => 1,
-                'action' => 2,
-            ));
+                'action'     => 2,
+            ]);
 
-            $router->add("/login", array(
-                'module' => 'backend',
+            $router->add("/login", [
+                'module'     => 'backend',
                 'controller' => 'login',
-                'action' => 'index',
-            ));
+                'action'     => 'index',
+            ]);
 
-            $router->add("/admin/products/:action", array(
-                'module' => 'backend',
+            $router->add("/admin/products/:action", [
+                'module'     => 'backend',
                 'controller' => 'products',
-                'action' => 1,
-            ));
+                'action'     => 1,
+            ]);
 
-            $router->add("/products/:action", array(
-                'module' => 'frontend',
+            $router->add("/products/:action", [
+                'module'     => 'frontend',
                 'controller' => 'products',
-                'action' => 1,
-            ));
+                'action'     => 1,
+            ]);
 
             return $router;
         });
@@ -70,17 +68,17 @@ class Application extends BaseApplication
 
         $this->registerServices();
 
-        //Register the installed modules
-        $this->registerModules(array(
-            'frontend' => array(
+        // Register the installed modules
+        $this->registerModules([
+            'frontend' => [
                 'className' => 'Multiple\Frontend\Module',
-                'path' => '../apps/frontend/Module.php'
-            ),
-            'backend' => array(
+                'path'      => '../apps/frontend/Module.php'
+            ],
+            'backend'  => [
                 'className' => 'Multiple\Backend\Module',
-                'path' => '../apps/backend/Module.php'
-            )
-        ));
+                'path'      => '../apps/backend/Module.php'
+            ]
+        ]);
 
         echo $this->handle()->getContent();
     }

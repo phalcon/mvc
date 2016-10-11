@@ -46,6 +46,7 @@ class Application extends BaseApplication
         $di->set('dispatcher', function () {
             $dispatcher = new Dispatcher();
             $dispatcher->setDefaultNamespace('Single\Controllers\\');
+
             return $dispatcher;
         });
 
@@ -63,16 +64,19 @@ class Application extends BaseApplication
         $di->set('view', function () {
             $view = new View();
             $view->setViewsDir('../apps/views/');
+
             return $view;
         });
 
         $di->set('db', function () {
-            return new Database(array(
-                "host" => "localhost",
-                "username" => "root",
-                "password" => "",
-                "dbname" => "invo"
-            ));
+            return new Database(
+                [
+                    "host"     => "localhost",
+                    "username" => "root",
+                    "password" => "",
+                    "dbname"   => "invo"
+                ]
+            );
         });
 
         // Registering the Models-Metadata
@@ -90,7 +94,6 @@ class Application extends BaseApplication
 
     public function main()
     {
-
         $this->registerServices();
         $this->registerAutoloaders();
 

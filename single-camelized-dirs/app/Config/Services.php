@@ -8,31 +8,36 @@ use Phalcon\Db\Adapter\Pdo\Mysql as Database;
 
 $di = new FactoryDefault();
 
-//Registering a dispatcher
-$di->set('dispatcher', function () {
+// Registering a dispatcher
+$di->setShared('dispatcher', function () {
     $dispatcher = new Dispatcher();
     $dispatcher->setDefaultNamespace('Single\Controllers\\');
-    return $dispatcher;
-}, true);
 
-//Registering the view component
-$di->set('view', function () {
+    return $dispatcher;
+});
+
+// Registering the view component
+$di->setShared('view', function () {
     $view = new View();
     $view->setViewsDir('../App/Views/');
-    return $view;
-}, true);
 
-$di->set('url', function () {
+    return $view;
+});
+
+$di->setShared('url', function () {
     $url = new UrlProvider();
     $url->setBaseUri('/mvc/single-camelized-dirs/');
-    return $url;
-}, true);
 
-$di->set('db', function () {
-    return new Database(array(
-        "host" => "localhost",
-        "username" => "root",
-        "password" => "",
-        "dbname" => "invo"
-    ));
-}, true);
+    return $url;
+});
+
+$di->setShared('db', function () {
+    return new Database(
+        [
+            "host"     => "localhost",
+            "username" => "root",
+            "password" => "",
+            "dbname"   => "invo"
+        ]
+    );
+});

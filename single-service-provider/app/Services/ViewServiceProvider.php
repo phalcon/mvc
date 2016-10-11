@@ -35,7 +35,6 @@ class ViewServiceProvider extends AbstractServiceProvider
                 );
 
                 $view->setViewsDir($config->viewsDir);
-                //$view->setRenderLevel(View::LEVEL_AFTER_TEMPLATE);
 
                 return $view;
             }

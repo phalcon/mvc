@@ -15,6 +15,7 @@ try {
     $di->set('router', function () {
         $router = new \Phalcon\Mvc\Router();
         $router->setDefaultModule("frontend");
+
         return $router;
     });
 
@@ -24,6 +25,7 @@ try {
     $di->set('url', function () {
         $url = new \Phalcon\Mvc\Url();
         $url->setBaseUri('/mvc/multiple-factory-default/');
+
         return $url;
     });
 
@@ -33,6 +35,7 @@ try {
     $di->set('session', function () {
         $session = new \Phalcon\Session\Adapter\Files();
         $session->start();
+
         return $session;
     });
 
@@ -46,12 +49,14 @@ try {
     /**
      * Register application modules
      */
-    $application->registerModules(array(
-        'frontend' => array(
-            'className' => 'Modules\Frontend\Module',
-            'path' => '../apps/frontend/Module.php'
-        )
-    ));
+    $application->registerModules(
+        [
+            'frontend' => [
+                'className' => 'Modules\Frontend\Module',
+                'path'      => '../apps/frontend/Module.php'
+            ]
+        ]
+    );
 
     echo $application->handle()->getContent();
 } catch (Phalcon\Exception $e) {
