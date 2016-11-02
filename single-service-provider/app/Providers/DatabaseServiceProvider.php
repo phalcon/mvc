@@ -15,7 +15,7 @@ class DatabaseServiceProvider extends AbstractServiceProvider
      * The Service name.
      * @var string
      */
-    protected $serviceName = 'database';
+    protected $serviceName = 'db';
 
     /**
      * Register application service.
