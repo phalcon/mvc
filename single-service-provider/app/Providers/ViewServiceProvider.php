@@ -32,7 +32,6 @@ class ViewServiceProvider extends AbstractServiceProvider
 
                 $view = new View();
 
-                /** @var \Phalcon\DiInterface $this */
                 $view->registerEngines(
                     [
                         '.volt' => $this->getShared('voltEngine', [$view, $this]),
