@@ -277,17 +277,19 @@ multiple/
 │   │       │   └── index.phtml
 │   │       └── products
 │   │           └── index.phtml
-│   ├── frontend
-│   │   ├── Module.php
-│   │   ├── controllers
-│   │   │   ├── IndexController.php
-│   │   │   ├── ProductsController.php
-│   │   │   └── UsersController.php
-│   │   ├── models
-│   │   │   └── Products.php
-│   │   └── views
-│   │       └── products
-│   │           └── index.phtml
+│   └── frontend
+│       ├── Module.php
+│       ├── controllers
+│       │   ├── IndexController.php
+│       │   ├── ProductsController.php
+│       │   └── UsersController.php
+│       ├── models
+│       │   └── Products.php
+│       └── views
+│           ├── index
+│           │   └── index.phtml
+│           └── products
+│               └── index.phtml
 └── public
     └── index.php
 ```
