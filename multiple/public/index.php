@@ -37,25 +37,25 @@ class Application extends BaseApplication
                 'module'     => 'frontend',
                 'controller' => 1,
                 'action'     => 2,
-            ]);
+            ])->setName('frontend');
 
             $router->add("/login", [
                 'module'     => 'backend',
                 'controller' => 'login',
                 'action'     => 'index',
-            ]);
+            ])->setName('backend-login');
 
             $router->add("/admin/products/:action", [
                 'module'     => 'backend',
                 'controller' => 'products',
                 'action'     => 1,
-            ]);
+            ])->setName('backend-product');
 
             $router->add("/products/:action", [
                 'module'     => 'frontend',
                 'controller' => 'products',
                 'action'     => 1,
-            ]);
+            ])->setName('frontend-product');
 
             return $router;
         });
