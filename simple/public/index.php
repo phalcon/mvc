@@ -2,6 +2,7 @@
 
 use Phalcon\Di;
 use Phalcon\Loader;
+use Phalcon\Mvc\Application;
 use Phalcon\Mvc\View;
 use Phalcon\Mvc\Router;
 use Phalcon\Http\Request;
