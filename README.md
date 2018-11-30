@@ -473,5 +473,3 @@ Copyright (c) 2011-2016, Phalcon Framework Team
 
 [devtools]: https://github.com/phalcon/phalcon-devtools
 [mvc-pattern]: https://en.wikipedia.org/wiki/Model–view–controller
-
---
