@@ -80,9 +80,7 @@ try {
     // Pass the output of the view to the response
     $response->setContent($view->getContent());
 
-    $response->sendHeaders();
-
-    echo $response->getContent();
+    $response->send();
 } catch (\Exception $e) {
     echo $e->getMessage();
 }

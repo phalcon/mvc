@@ -103,7 +103,9 @@ class Bootstrap
     protected function getOutput()
     {
         if ($this->app instanceof Application) {
-            return $this->app->handle()->getContent();
+            $response = $this->app->handle();
+
+            return $response->getContent();
         }
 
         return $this->app->handle();

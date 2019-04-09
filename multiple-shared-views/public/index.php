@@ -89,4 +89,4 @@ $application->registerModules(
 
 $response = $application->handle();
 
-echo $response->getContent();
+$response->send();

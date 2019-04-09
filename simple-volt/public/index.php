@@ -24,7 +24,10 @@ try {
      */
     $application = new \Phalcon\Mvc\Application();
     $application->setDI($di);
-    echo $application->handle()->getContent();
+
+    $response = $application->handle();
+
+    $response->send();
 } catch (Phalcon\Exception $e) {
     echo $e->getMessage();
 } catch (PDOException $e) {

@@ -98,4 +98,8 @@ $di = new FactoryDefault();
 
 $app = new HMVCApplication($di);
 
-echo $app->handle()->getContent();
+
+
+$response = $app->handle();
+
+$response->send();
