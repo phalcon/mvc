@@ -80,7 +80,9 @@ class Application extends BaseApplication
             ]
         ]);
 
-        echo $this->handle()->getContent();
+        $response = $this->handle();
+
+        $response->send();
     }
 }
 

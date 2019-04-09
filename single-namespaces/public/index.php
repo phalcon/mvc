@@ -97,7 +97,9 @@ class Application extends BaseApplication
         $this->registerServices();
         $this->registerAutoloaders();
 
-        echo $this->handle()->getContent();
+        $response = $this->handle();
+
+        $response->send();
     }
 }
 

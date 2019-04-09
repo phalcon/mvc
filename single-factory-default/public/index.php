@@ -86,7 +86,10 @@ try {
      * Handle the request
      */
     $application = new Application($di);
-    echo $application->handle()->getContent();
+
+    $response = $application->handle();
+
+    $response->send();
 } catch (\Exception $e) {
     echo $e->getMessage();
 }

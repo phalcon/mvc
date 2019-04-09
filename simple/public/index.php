@@ -78,7 +78,7 @@ try {
 
     $response = $application->handle();
 
-    echo $response->getContent();
+    $response->send();
 } catch (Exception $e) {
     echo $e->getMessage();
 }
