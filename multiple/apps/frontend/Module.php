@@ -2,9 +2,9 @@
 
 namespace Multiple\Frontend;
 
-use Phalcon\Loader;
+use Phalcon\Autoload\Loader;
 use Phalcon\Mvc\View;
-use Phalcon\DiInterface;
+use Phalcon\Di\DiInterface;
 use Phalcon\Events\Manager;
 use Phalcon\Mvc\Dispatcher;
 use Phalcon\Db\Adapter\Pdo\Mysql;
@@ -21,7 +21,7 @@ class Module implements ModuleDefinitionInterface
     {
         $loader = new Loader();
 
-        $loader->registerNamespaces(
+        $loader->setNamespaces(
             [
                 'Multiple\Frontend\Controllers' => '../apps/frontend/controllers/',
                 'Multiple\Frontend\Models' => '../apps/frontend/models/',
@@ -63,10 +63,10 @@ class Module implements ModuleDefinitionInterface
         $di->set('db', function () {
             return new Mysql(
                 [
-                    "host" => "localhost",
-                    "username" => "root",
-                    "password" => "secret",
-                    "dbname" => "invo"
+                    'host'     => 'localhost',
+                    'username' => 'phalcon',
+                    'password' => 'secret',
+                    'dbname'   => 'phalcon_invo',
                 ]
             );
         });

@@ -2,8 +2,8 @@
 
 namespace App;
 
-use Phalcon\Di;
-use Phalcon\DiInterface;
+use Phalcon\Di\Di;
+use Phalcon\Di\DiInterface;
 use Phalcon\Mvc\Application;
 use App\Providers\ServiceProviderInterface;
 
@@ -103,12 +103,12 @@ class Bootstrap
     protected function getOutput()
     {
         if ($this->app instanceof Application) {
-            $response = $this->app->handle();
+            $response = $this->app->handle($_SERVER["REQUEST_URI"]);
 
             return $response->getContent();
         }
 
-        return $this->app->handle();
+        return $this->app->handle($_SERVER["REQUEST_URI"]);
     }
 
     /**

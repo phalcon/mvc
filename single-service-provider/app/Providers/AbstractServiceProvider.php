@@ -2,15 +2,15 @@
 
 namespace App\Providers;
 
-use Phalcon\DiInterface;
-use Phalcon\Mvc\User\Component;
+use Phalcon\Di\DiInterface;
+use Phalcon\Di\Injectable;
 
 /**
  * \App\Providers\AbstractServiceProvider
  *
  * @package App\Providers
  */
-abstract class AbstractServiceProvider extends Component implements ServiceProviderInterface
+abstract class AbstractServiceProvider extends Injectable implements ServiceProviderInterface
 {
     /**
      * The Service name.

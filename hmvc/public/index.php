@@ -1,7 +1,7 @@
 <?php
 
-use Phalcon\Loader;
-use Phalcon\DiInterface;
+use Phalcon\Autoload\Loader;
+use Phalcon\Di\DiInterface;
 use Phalcon\DI\FactoryDefault;
 use Phalcon\Mvc\View;
 use Phalcon\Http\ResponseInterface;
@@ -19,7 +19,7 @@ class HMVCApplication extends MVCApplication
         $loader = new Loader();
 
         // Application Loader
-        $loader->registerDirs(
+        $loader->setDirectories(
             [
                 "../app/controllers/",
             ]
@@ -100,6 +100,6 @@ $app = new HMVCApplication($di);
 
 
 
-$response = $app->handle();
+$response = $app->handle($_SERVER["REQUEST_URI"]);
 
 $response->send();

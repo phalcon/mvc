@@ -1,13 +1,14 @@
 <?php
 
-use Phalcon\DI\FactoryDefault;
-use Phalcon\Mvc\View;
-use Phalcon\Mvc\Url as UrlResolver;
 use Phalcon\Db\Adapter\Pdo\Mysql as DbAdapter;
-use Phalcon\Mvc\View\Engine\Volt as VoltEngine;
+use Phalcon\DI\FactoryDefault;
 use Phalcon\Mvc\Model\Metadata\Memory as MetaDataAdapter;
-use Phalcon\Session\Adapter\Files as SessionAdapter;
+use Phalcon\Mvc\Url as UrlResolver;
+use Phalcon\Mvc\View;
 use Phalcon\Mvc\View\Engine\Php as PhpViewEngine;
+use Phalcon\Mvc\View\Engine\Volt as VoltEngine;
+use Phalcon\Session\Adapter\Stream as SessionAdapter;
+use Phalcon\Session\Manager as Session;
 
 /**
  * The FactoryDefault Dependency Injector automatically registers the right
@@ -46,13 +47,13 @@ $di->set(
 
         $view->registerEngines(
             [
-                ".volt" => function ($view, $di) use ($config) {
-                    $volt = new VoltEngine($view, $di);
+                ".volt" => function ($view) use ($config) {
+                    $volt = new VoltEngine($view, $this);
 
                     $volt->setOptions(
                         [
-                            "compiledPath"      => $config->application->cacheDir,
-                            "compiledSeparator" => "_",
+                            "path"      => $config->application->cacheDir,
+                            "separator" => "_",
                         ]
                     );
 
@@ -103,10 +104,23 @@ $di->set(
 $di->set(
     "session",
     function () {
-        $session = new SessionAdapter();
+        $session = new Session();
+        $files = new SessionAdapter([
+            'savePath' => sys_get_temp_dir(),
+        ]);
+        $session->setAdapter($files);
 
         $session->start();
 
         return $session;
     }
 );
+
+
+class myVoltEngine extends VoltEngine
+{
+    public function __set(string $key, $value)
+    {
+    }
+
+}

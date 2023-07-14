@@ -1,15 +1,15 @@
 <?php
 
-use Phalcon\Config;
+use Phalcon\Config\Config;
 
 return new Config(
     [
         'database'    => [
             'adapter'  => 'Mysql',
             'host'     => 'localhost',
-            'username' => 'root',
-            'password' => '',
-            'dbname'   => 'phalcon',
+            'username' => 'phalcon',
+            'password' => 'secret',
+            'dbname'   => 'phalcon_invo',
         ],
         'application' => [
             'controllersDir' => __DIR__ . '/../controllers/',

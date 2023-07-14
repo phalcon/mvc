@@ -58,11 +58,11 @@ try {
         ]
     );
 
-    $response = $application->handle();
+    $response = $application->handle($_SERVER["REQUEST_URI"]);
 
     $response->send();
-} catch (Phalcon\Exception $e) {
-    echo $e->getMessage();
 } catch (PDOException $e) {
+    echo $e->getMessage();
+} catch (Exception $e) {
     echo $e->getMessage();
 }
