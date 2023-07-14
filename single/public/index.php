@@ -1,7 +1,7 @@
 <?php
 
-use Phalcon\DI;
-use Phalcon\Loader;
+use Phalcon\DI\Di;
+use Phalcon\Autoload\Loader;
 use Phalcon\Mvc\Router;
 use Phalcon\Mvc\Dispatcher;
 use Phalcon\Http\Response;
@@ -18,7 +18,7 @@ class Application extends BaseApplication
     {
         $loader = new Loader();
 
-        $loader->registerDirs(
+        $loader->setDirectories(
             [
                 "../apps/controllers/",
                 "../apps/models/",
@@ -84,10 +84,10 @@ class Application extends BaseApplication
             function () {
                 return new Database(
                     [
-                        "host"     => "localhost",
-                        "username" => "root",
-                        "password" => "",
-                        "dbname"   => "invo",
+                        'host'     => 'localhost',
+                        'username' => 'phalcon',
+                        'password' => 'secret',
+                        'dbname'   => 'phalcon_invo',
                     ]
                 );
             }
@@ -108,6 +108,13 @@ class Application extends BaseApplication
                 return new ModelsManager();
             }
         );
+        
+        $di->set(
+            'tag',
+            function () {
+                return new \Phalcon\Html\TagFactory(new \Phalcon\Html\Escaper());
+            }
+        );
 
         $this->setDI($di);
     }
@@ -117,7 +124,7 @@ class Application extends BaseApplication
         $this->registerServices();
         $this->registerAutoloaders();
 
-        $response = $this->handle();
+        $response = $this->handle($_SERVER["REQUEST_URI"]);
 
         $response->send();
     }

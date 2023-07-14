@@ -2,7 +2,7 @@
 
 error_reporting(E_ALL);
 
-use Phalcon\Loader;
+use Phalcon\Autoload\Loader;
 use Phalcon\Mvc\Micro;
 use Phalcon\DI\FactoryDefault;
 use Phalcon\Db\Adapter\Pdo\Mysql as Database;
@@ -46,7 +46,7 @@ try {
     $loader = new Loader();
 
     $loader
-        ->registerDirs([$config->application->modelsDir])
+        ->setDirectories([$config->application->modelsDir])
         ->register();
 
     /**
@@ -72,7 +72,7 @@ try {
     /**
      * Handle the request
      */
-    $app->handle();
+    $app->handle($_SERVER["REQUEST_URI"]);
 } catch (\Exception $e) {
     echo $e->getMessage(), PHP_EOL;
     echo $e->getTraceAsString();

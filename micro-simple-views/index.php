@@ -20,4 +20,4 @@ $app->error(function () use ($app) {
     echo $app['view']->render('500');
 });
 
-$app->handle();
+$app->handle($_SERVER["REQUEST_URI"]);

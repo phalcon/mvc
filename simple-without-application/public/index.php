@@ -1,7 +1,7 @@
 <?php
 
-use Phalcon\Di;
-use Phalcon\Loader;
+use Phalcon\Di\Di;
+use Phalcon\Autoload\Loader;
 use Phalcon\Mvc\View;
 use Phalcon\Db\Adapter\Pdo\Mysql;
 
@@ -11,7 +11,7 @@ use Phalcon\Db\Adapter\Pdo\Mysql;
 
 $loader = new Loader();
 
-$loader->registerDirs(
+$loader->setDirectories(
     [
         '../apps/controllers/',
         '../apps/models/'
@@ -40,10 +40,10 @@ $di->set('view', function () {
 
 $di->set('db', function () {
     return new Mysql([
-        "host" => "localhost",
-        "username" => "root",
-        "password" => "",
-        "dbname" => "invo"
+        'host'     => 'localhost',
+        'username' => 'phalcon',
+        'password' => 'secret',
+        'dbname'   => 'phalcon_invo',
     ]);
 });
 
@@ -55,7 +55,7 @@ $di->set('modelsManager', 'Phalcon\Mvc\Model\Manager');
 
 try {
     $router = $di->getShared('router');
-    $router->handle();
+    $router->handle($_SERVER["REQUEST_URI"]);
 
     $view = $di->getShared('view');
 
@@ -83,4 +83,5 @@ try {
     $response->send();
 } catch (\Exception $e) {
     echo $e->getMessage();
+    var_dump(getcwd(), realpath('../apps/controllers/'), $loader->getDebug());
 }

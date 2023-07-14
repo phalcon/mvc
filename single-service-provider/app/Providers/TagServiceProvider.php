@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use Phalcon\Session\Adapter\Stream as SessionFiles;
+use Phalcon\Session\Manager as SessionManager;
 use Phalcon\Tag;
 
 /**
@@ -24,6 +26,19 @@ class TagServiceProvider extends AbstractServiceProvider
      */
     public function register()
     {
-        $this->di->setShared($this->serviceName, Tag::class);
+        $this->di->setShared(
+            $this->serviceName,
+            function () {
+                $session = new SessionManager();
+                $files = new SessionFiles([
+                    'savePath' => '/tmp',
+                ]);
+
+                $session
+                    ->setAdapter($files)
+                    ->start();
+                return $session;
+            }
+        );
     }
 }

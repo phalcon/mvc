@@ -30,13 +30,13 @@ $di->setShared('view', function () use ($config) {
 
     $view->registerEngines(
         [
-            '.volt' => function ($view, $di) use ($config) {
-                $volt = new VoltEngine($view, $di);
+            '.volt' => function ($view) use ($config) {
+                $volt = new VoltEngine($view);
 
                 $volt->setOptions(
                     [
-                        'compiledPath'      => $config->application->cacheDir,
-                        'compiledSeparator' => '_',
+                        'path'      => $config->application->cacheDir,
+                        'separator' => '_',
                     ]
                 );
 
@@ -47,3 +47,11 @@ $di->setShared('view', function () use ($config) {
 
     return $view;
 });
+
+
+$di->setShared(
+    'tag',
+    function () {
+        return new \Phalcon\Html\TagFactory(new \Phalcon\Html\Escaper());
+    }
+);

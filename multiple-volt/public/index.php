@@ -25,7 +25,7 @@ try {
      */
     require __DIR__ . "/../config/modules.php";
 
-    $response = $application->handle();
+    $response = $application->handle($_SERVER["REQUEST_URI"]);
 
     $response->send();
 } catch (Exception $e) {

@@ -19,7 +19,7 @@ $di->setShared('dispatcher', function () {
 // Registering the view component
 $di->setShared('view', function () {
     $view = new View();
-    $view->setViewsDir('../App/Views/');
+    $view->setViewsDir('../app/Views/');
 
     return $view;
 });
@@ -34,10 +34,10 @@ $di->setShared('url', function () {
 $di->setShared('db', function () {
     return new Database(
         [
-            "host"     => "localhost",
-            "username" => "root",
-            "password" => "",
-            "dbname"   => "invo"
+            'host'     => 'localhost',
+            'username' => 'phalcon',
+            'password' => 'secret',
+            'dbname'   => 'phalcon_invo',
         ]
     );
 });

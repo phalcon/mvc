@@ -2,7 +2,8 @@
 
 namespace App\Providers;
 
-use Phalcon\Session\Adapter\Files;
+use Phalcon\Session\Adapter\Stream as SessionFiles;
+use Phalcon\Session\Manager as SessionManager;
 
 /**
  * \App\Providers\SessionServiceProvider
@@ -27,9 +28,14 @@ class SessionServiceProvider extends AbstractServiceProvider
         $this->di->setShared(
             $this->serviceName,
             function () {
-                $session = new Files();
-                $session->start();
+                $session = new SessionManager();
+                $files = new SessionFiles([
+                    'savePath' => '/tmp',
+                ]);
 
+                $session
+                    ->setAdapter($files)
+                    ->start();
                 return $session;
             }
         );

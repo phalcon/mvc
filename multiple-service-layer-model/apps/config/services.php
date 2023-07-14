@@ -6,7 +6,8 @@
 use Phalcon\Mvc\Router;
 use Phalcon\Mvc\Url as UrlResolver;
 use Phalcon\DI\FactoryDefault;
-use Phalcon\Session\Adapter\Files as SessionAdapter;
+use Phalcon\Session\Adapter\Stream as SessionFiles;
+use Phalcon\Session\Manager as SessionManager;
 
 /**
  * The FactoryDefault Dependency Injector automatically register the right services providing a full stack framework
@@ -22,8 +23,6 @@ $di['router'] = function () {
 
     $router->setDefaultModule("frontend");
     $router->setDefaultNamespace("Modules\Modules\Frontend\Controllers");
-    
-    $router->setUriSource(\Phalcon\Mvc\Router::URI_SOURCE_SERVER_REQUEST_URI);
     
     $router->removeExtraSlashes(true);
 
@@ -44,7 +43,12 @@ $di['url'] = function () {
  * Start the session the first time some component request the session service
  */
 $di['session'] = function () {
-    $session = new SessionAdapter();
+    $session = new SessionManager();
+    $files = new SessionFiles([
+        'savePath' => sys_get_temp_dir(),
+    ]);
+
+    $session->setAdapter($files);
     $session->start();
 
     return $session;

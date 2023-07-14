@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use Phalcon\Escaper;
+use Phalcon\Html\Escaper;
 
 /**
  * \App\Providers\EscaperServiceProvider

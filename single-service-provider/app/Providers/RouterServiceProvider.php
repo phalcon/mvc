@@ -25,7 +25,7 @@ class RouterServiceProvider extends AbstractServiceProvider
         $this->di->setShared(
             $this->serviceName,
             function () {
-                /** @var \Phalcon\DiInterface  $this */
+                /** @var \Phalcon\Di\DiInterface  $this */
                 $appPath = $this->getShared('bootstrap')->getApplicationPath();
 
                 return require $appPath . '/app/Http/routes.php';
