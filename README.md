@@ -376,7 +376,7 @@ multiple-factory-default/
 │           └── index.phtml
 ├── index.html
 └── public
-    └── index.ph
+    └── index.php
 ```
 
 
