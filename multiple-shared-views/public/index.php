@@ -87,6 +87,6 @@ $application->registerModules(
     ]
 );
 
-$response = $application->handle();
+$response = $application->handle($_SERVER["REQUEST_URI"]);
 
 $response->send();

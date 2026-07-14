@@ -39,4 +39,4 @@ $app->notFound(
     }
 );
 
-$app->handle();
+$app->handle($_SERVER["REQUEST_URI"]);

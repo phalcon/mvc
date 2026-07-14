@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use Phalcon\Config;
+use Phalcon\Config\Config;
 
 /**
  * \App\Providers\ConfigServiceProvider
@@ -27,12 +27,11 @@ class ConfigServiceProvider extends AbstractServiceProvider
         $this->di->setShared(
             $this->serviceName,
             function () {
-                /** @var \Phalcon\DiInterface  $this */
+                /** @var \Phalcon\Di\DiInterface  $this */
                 $config = [];
                 $appPath = $this->getShared('bootstrap')->getApplicationPath();
 
                 if (file_exists($appPath . '/config/application.php')) {
-                    /** @noinspection PhpIncludeInspection */
                     $config = include $appPath . '/config/application.php';
                 }
 

@@ -2,9 +2,9 @@
 
 namespace Multiple\Frontend;
 
-use Phalcon\Loader;
+use Phalcon\Autoload\Loader;
 use Phalcon\Mvc\View;
-use Phalcon\DiInterface;
+use Phalcon\Di\DiInterface;
 use Phalcon\Mvc\ModuleDefinitionInterface;
 use Phalcon\Db\Adapter\Pdo\Mysql as DbAdapter;
 use Phalcon\Mvc\View\Engine\Volt as VoltEngine;
@@ -20,7 +20,7 @@ class Module implements ModuleDefinitionInterface
     {
         $loader = new Loader();
 
-        $loader->registerNamespaces(
+        $loader->setNamespaces(
             [
                 'Multiple\Frontend\Controllers' => __DIR__ . "/controllers/",
                 'Multiple\Frontend\Models'      => __DIR__ . "/models/",

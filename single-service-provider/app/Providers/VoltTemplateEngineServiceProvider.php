@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use Phalcon\DiInterface;
+use Phalcon\Di\DiInterface;
 use Phalcon\Mvc\View\Engine\Volt;
 use Phalcon\Mvc\ViewBaseInterface;
 
@@ -29,15 +29,15 @@ class VoltTemplateEngineServiceProvider extends AbstractServiceProvider
         $this->di->setShared(
             $this->serviceName,
             function (ViewBaseInterface $view, DiInterface $di = null) {
-                /** @var \Phalcon\DiInterface $this */
+                /** @var DiInterface $this */
                 $config = $this->getShared('config')->volt;
 
                 $volt = new Volt($view, $di);
 
                 $volt->setOptions(
                     [
-                        'compiledPath'      => $config->cacheDir,
-                        'compiledSeparator' => $config->compiledSeparator
+                        'path'      => $config->cacheDir,
+                        'separator' => $config->compiledSeparator
                     ]
                 );
 

@@ -1,7 +1,7 @@
 <?php
 
-use Phalcon\Di;
-use Phalcon\Loader;
+use Phalcon\Di\Di;
+use Phalcon\Autoload\Loader;
 use Phalcon\Mvc\Application;
 use Phalcon\Mvc\View;
 use Phalcon\Mvc\Router;
@@ -18,7 +18,7 @@ use Phalcon\Mvc\Model\Metadata\Memory as ModelMetadata;
 
 $loader = new Loader();
 
-$loader->registerDirs(
+$loader->setDirectories(
     [
         "../apps/controllers/",
         "../apps/models/",
@@ -58,10 +58,10 @@ $di->set(
     function () {
         return new Database(
             [
-                "host"     => "localhost",
-                "username" => "root",
-                "password" => "",
-                "dbname"   => "invo",
+                'host'     => 'localhost',
+                'username' => 'phalcon',
+                'password' => 'secret',
+                'dbname'   => 'phalcon_invo',
             ]
         );
     }
@@ -73,10 +73,17 @@ $di->set("modelsMetadata", ModelMetadata::class);
 //Registering the Models Manager
 $di->set("modelsManager", ModelManager::class);
 
+$di->setShared(
+    'tag',
+    function () {
+        return new \Phalcon\Html\TagFactory(new \Phalcon\Html\Escaper());
+    }
+);
+
 try {
     $application = new Application($di);
 
-    $response = $application->handle();
+    $response = $application->handle($_SERVER["REQUEST_URI"]);
 
     $response->send();
 } catch (Exception $e) {

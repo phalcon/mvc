@@ -2,12 +2,13 @@
 
 error_reporting(E_ALL);
 
-use Phalcon\Loader;
+use Phalcon\Autoload\Loader;
 use Phalcon\Mvc\View as View;
 use Phalcon\DI\FactoryDefault;
 use Phalcon\Mvc\Url as UrlResolver;
 use Phalcon\Mvc\Application as Application;
-use Phalcon\Session\Adapter\Files as Session;
+use Phalcon\Session\Adapter\Stream as SessionFiles;
+use Phalcon\Session\Manager as SessionManager;
 use Phalcon\Db\Adapter\Pdo\Mysql as Database;
 use Phalcon\Mvc\Model\MetaData\Memory as MemoryMetaData;
 
@@ -22,7 +23,7 @@ try {
     /**
      * We're a registering a set of directories taken from the configuration file
      */
-    $loader->registerDirs(
+    $loader->setDirectories(
         [
             $config->application->controllersDir,
             $config->application->modelsDir
@@ -77,8 +78,14 @@ try {
      * Start the session the first time some component request the session service
      */
     $di->set('session', function () {
-        $session = new Session();
-        $session->start();
+        $session = new SessionManager();
+        $files = new SessionFiles([
+            'savePath' => '/tmp',
+        ]);
+        
+        $session
+            ->setAdapter($files)
+            ->start();
         return $session;
     });
 
@@ -87,7 +94,7 @@ try {
      */
     $application = new Application($di);
 
-    $response = $application->handle();
+    $response = $application->handle($_SERVER["REQUEST_URI"]);
 
     $response->send();
 } catch (\Exception $e) {

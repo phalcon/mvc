@@ -1,6 +1,6 @@
 <?php
 
-use Phalcon\Config;
+use Phalcon\Config\Config;
 
 $config = new Config(
     [

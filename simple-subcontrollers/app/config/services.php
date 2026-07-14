@@ -7,7 +7,8 @@ use Phalcon\Mvc\Url as UrlResolver;
 use Phalcon\Db\Adapter\Pdo\Mysql as DbAdapter;
 use Phalcon\Mvc\View\Engine\Volt as VoltEngine;
 use Phalcon\Mvc\Model\Metadata\Memory as MetaDataAdapter;
-use Phalcon\Session\Adapter\Files as SessionAdapter;
+use Phalcon\Session\Adapter\Stream as SessionFiles;
+use Phalcon\Session\Manager as SessionManager;
 
 /**
  * The FactoryDefault Dependency Injector automatically register the right services providing a full stack framework
@@ -39,13 +40,12 @@ $di->setShared('view', function () use ($config) {
 
     $view->registerEngines(
         [
-            '.volt'  => function ($view, $di) use ($config) {
-                $volt = new VoltEngine($view, $di);
-
+            '.volt'  => function ($view) use ($config) {
+                $volt = new VoltEngine($view, $this);
                 $volt->setOptions(
                     [
-                        'compiledPath'      => $config->application->cacheDir,
-                        'compiledSeparator' => '_'
+                        'path'      => $config->application->cacheDir,
+                        'separator' => '_'
                     ]
                 );
 
@@ -84,9 +84,14 @@ $di->set('modelsMetadata', function () use ($config) {
  * Start the session the first time some component request the session service
  */
 $di->set('session', function () {
-    $session = new SessionAdapter();
-    $session->start();
+    $session = new SessionManager();
+    $files = new SessionFiles([
+        'savePath' => '/tmp',
+    ]);
 
+    $session
+        ->setAdapter($files)
+        ->start();
     return $session;
 });
 

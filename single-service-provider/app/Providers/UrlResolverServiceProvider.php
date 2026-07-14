@@ -29,7 +29,7 @@ class UrlResolverServiceProvider extends AbstractServiceProvider
             function () {
                 $url = new Url();
 
-                /** @var \Phalcon\DiInterface $this */
+                /** @var \Phalcon\Di\DiInterface $this */
                 $url->setBaseUri($this->getShared('application')->baseUri);
 
                 return $url;

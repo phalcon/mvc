@@ -27,7 +27,7 @@ class DatabaseServiceProvider extends AbstractServiceProvider
         $this->di->setShared(
             $this->serviceName,
             function () {
-                /** @var \Phalcon\DiInterface $this */
+                /** @var \Phalcon\Di\DiInterface $this */
                 $connection = new Mysql($this->getShared('config')->database->toArray());
 
                 return $connection;

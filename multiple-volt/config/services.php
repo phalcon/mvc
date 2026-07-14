@@ -7,7 +7,8 @@
 use Phalcon\Mvc\Router;
 use Phalcon\Mvc\Url as UrlResolver;
 use Phalcon\DI\FactoryDefault;
-use Phalcon\Session\Adapter\Files as SessionAdapter;
+use Phalcon\Session\Adapter\Stream as SessionFiles;
+use Phalcon\Session\Manager as SessionManager;
 
 /**
  * The FactoryDefault Dependency Injector automatically registers the right
@@ -43,8 +44,12 @@ $di["url"] = function () {
  * Start the session the first time some component request the session service
  */
 $di["session"] = function () {
-    $session = new SessionAdapter();
+    $session = new SessionManager();
+    $files = new SessionFiles([
+        'savePath' => sys_get_temp_dir(),
+    ]);
 
+    $session->setAdapter($files);
     $session->start();
 
     return $session;

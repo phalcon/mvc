@@ -1,13 +1,12 @@
 <?php
 
-use Phalcon\Loader;
+use Phalcon\Autoload\Loader;
 
 $loader = new Loader();
-
-$loader->registerNamespaces(
+$loader->setNamespaces(
     [
-        'Single\Controllers' => '../App/Controllers/',
-        'Single\Models'      => '../App/Models/'
+        'Single\Controllers' => '../app/Controllers/',
+        'Single\Models'      => '../app/Models/'
     ]
 );
 

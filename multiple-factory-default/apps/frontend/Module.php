@@ -2,9 +2,9 @@
 
 namespace Modules\Frontend;
 
-use Phalcon\Loader;
+use Phalcon\Autoload\Loader;
 use Phalcon\Mvc\View;
-use Phalcon\DiInterface;
+use Phalcon\Di\DiInterface;
 use Phalcon\Mvc\Dispatcher;
 use Phalcon\Mvc\ModuleDefinitionInterface;
 use Phalcon\Db\Adapter\Pdo\Mysql as MySQLAdapter;
@@ -20,7 +20,7 @@ class Module implements ModuleDefinitionInterface
     {
         $loader = new Loader();
 
-        $loader->registerNamespaces(
+        $loader->setNamespaces(
             [
                 'Modules\Frontend\Controllers' => __DIR__ . '/controllers/',
                 'Modules\Frontend\Models' => __DIR__ . '/models/',

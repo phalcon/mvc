@@ -2,10 +2,10 @@
 
 namespace Multiple\Backend;
 
-use Phalcon\Loader;
+use Phalcon\Autoload\Loader;
 use Phalcon\Mvc\View;
 use Phalcon\Mvc\Dispatcher;
-use Phalcon\DiInterface;
+use Phalcon\Di\DiInterface;
 use Phalcon\Mvc\ModuleDefinitionInterface;
 use Phalcon\Db\Adapter\Pdo\Mysql as Database;
 
@@ -20,7 +20,7 @@ class Module implements ModuleDefinitionInterface
     {
         $loader = new Loader();
 
-        $loader->registerNamespaces(
+        $loader->setNamespaces(
             [
                 'Multiple\Backend\Controllers' => '../apps/backend/controllers/',
                 'Multiple\Backend\Models'      => '../apps/backend/models/',
@@ -56,10 +56,10 @@ class Module implements ModuleDefinitionInterface
         $di->set('db', function () {
             return new Database(
                 [
-                    "host" => "localhost",
-                    "username" => "root",
-                    "password" => "secret",
-                    "dbname" => "invo"
+                    'host'     => 'localhost',
+                    'username' => 'phalcon',
+                    'password' => 'secret',
+                    'dbname'   => 'phalcon_invo',
                 ]
             );
         });

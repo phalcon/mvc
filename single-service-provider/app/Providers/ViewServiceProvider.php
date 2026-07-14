@@ -27,7 +27,7 @@ class ViewServiceProvider extends AbstractServiceProvider
         $this->di->setShared(
             $this->serviceName,
             function () {
-                /** @var \Phalcon\DiInterface $this */
+                /** @var \Phalcon\Di\DiInterface $this */
                 $config = $this->getShared('config')->application;
 
                 $view = new View();

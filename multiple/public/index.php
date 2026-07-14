@@ -2,7 +2,7 @@
 
 error_reporting(E_ALL);
 
-use Phalcon\Loader;
+use Phalcon\Autoload\Loader;
 use Phalcon\Mvc\Router;
 use Phalcon\DI\FactoryDefault;
 use Phalcon\Mvc\Application as BaseApplication;
@@ -23,7 +23,7 @@ class Application extends BaseApplication
          * We're a registering a set of directories taken from the configuration file
          */
         $loader
-            ->registerDirs([__DIR__ . '/../apps/library/'])
+            ->setDirectories([__DIR__ . '/../apps/library/'])
             ->register();
 
         // Registering a router
@@ -80,7 +80,7 @@ class Application extends BaseApplication
             ]
         ]);
 
-        $response = $this->handle();
+        $response = $this->handle($_SERVER["REQUEST_URI"]);
 
         $response->send();
     }

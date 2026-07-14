@@ -1,11 +1,11 @@
 <?php
 
-use Phalcon\Text;
+use Phalcon\Support\Helper\Str\Camelize;
 use Phalcon\Mvc\Application;
 use Phalcon\Events\Manager as EventsManager;
 
-require "../App/Config/Loader.php";
-require "../App/Config/Services.php";
+require "../app/Config/Loader.php";
+require "../app/Config/Services.php";
 
 try {
     $eventsManager = new EventsManager;
@@ -15,10 +15,10 @@ try {
         function ($event, $application, $view) use ($di) {
 
             $dispatcher = $di->getDispatcher();
-
+            $helper = $di->getHelper();
             $view->render(
-                Text::camelize($dispatcher->getControllerName()),
-                Text::camelize($dispatcher->getActionName()),
+                $helper->camelize($dispatcher->getControllerName()),
+                $helper->camelize($dispatcher->getActionName()),
                 $dispatcher->getParams()
             );
         }
@@ -28,7 +28,7 @@ try {
 
     $application->setEventsManager($eventsManager);
 
-    $response = $application->handle();
+    $response = $application->handle($_SERVER["REQUEST_URI"]);
 
     $response->send();
 } catch (\Exception $e) {

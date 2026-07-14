@@ -3,8 +3,8 @@
 namespace Modules\Models\Entities;
 
 use Phalcon\Mvc\Model;
-use Phalcon\Validation;
-use Phalcon\Validation\Validator\Email as EmailValidator;
+use Phalcon\Filter\Validation;
+use Phalcon\Filter\Validation\Validator\Email as EmailValidator;
 
 class User extends Model
 {
@@ -200,8 +200,4 @@ class User extends Model
         return $this->validate($validator);
     }
 
-    public function getSource()
-    {
-        return 'user';
-    }
 }

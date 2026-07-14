@@ -2,8 +2,8 @@
 
 namespace Single;
 
-use Phalcon\DI;
-use Phalcon\Loader;
+use Phalcon\DI\Di;
+use Phalcon\Autoload\Loader;
 use Phalcon\Mvc\View;
 use Phalcon\Mvc\Router;
 use Phalcon\Mvc\Dispatcher;
@@ -20,7 +20,7 @@ class Application extends BaseApplication
     {
         $loader = new Loader();
 
-        $loader->registerNamespaces(
+        $loader->setNamespaces(
             [
                 'Single\Controllers' => '../apps/controllers/',
                 'Single\Models'      => '../apps/models/'
@@ -71,10 +71,10 @@ class Application extends BaseApplication
         $di->set('db', function () {
             return new Database(
                 [
-                    "host"     => "localhost",
-                    "username" => "root",
-                    "password" => "",
-                    "dbname"   => "invo"
+                    'host'     => 'localhost',
+                    'username' => 'phalcon',
+                    'password' => 'secret',
+                    'dbname'   => 'phalcon_invo',
                 ]
             );
         });
@@ -97,7 +97,7 @@ class Application extends BaseApplication
         $this->registerServices();
         $this->registerAutoloaders();
 
-        $response = $this->handle();
+        $response = $this->handle($_SERVER["REQUEST_URI"]);
 
         $response->send();
     }
